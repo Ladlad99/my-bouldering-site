@@ -98,12 +98,13 @@
     <div class="video-section">
         <h2 class="highlight">סרטונים נבחרים</h2>
         
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=nJNyylYDp0Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=rQq_8YeP3Y4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 
-    <a href="https://youtube.com/@YOURCHANNEL" class="btn">לערוץ היוטיוב המלא</a>
+    <a href="https://www.youtube.com/watch?v=P8lh_Y2OdFk" class="btn">לערוץ היוטיוב המלא</a>
 
 </body>
 </html>
+
