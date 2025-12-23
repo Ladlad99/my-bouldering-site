@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # We are using only these two video files from your static folder
     image_url = url_for('static', filename='hero.jpg')
     vid1_url = url_for('static', filename='climb1.mp4')
     vid3_url = url_for('static', filename='climb3.mp4')
@@ -51,22 +50,24 @@ def home():
                     margin-bottom: 30px; 
                 }}
 
-                /* --- Two-Video Row Styling --- */
+                /* --- Extra Small Two-Video Row --- */
                 .video-container {{
                     display: flex;
                     justify-content: center;
-                    gap: 30px;
+                    gap: 50px;
                     max-width: 1100px;
                     margin: 0 auto 40px auto;
-                    align-items: flex-start;
+                    align-items: center;
                 }}
                 .video-item {{
-                    width: 45%; 
+                    width: 25%; /* Sized down to 25% */
                     height: auto; 
+                    max-height: 250px; 
                     object-fit: contain; 
                     border: 3px solid white; 
-                    border-radius: 15px;
+                    border-radius: 12px;
                     background-color: #1a252f;
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.3); /* Subtle Shadow */
                 }}
 
                 .description {{ 
