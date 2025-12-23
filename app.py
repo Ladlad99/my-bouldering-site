@@ -1,16 +1,28 @@
-from flask import Flask
+from flask import Flask, url_for
 import os
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
+    # This generates the correct path to your image
+    image_url = url_for('static', filename='hero.jpg')
+    
+    # We use single { } for the variables and {{ }} for the CSS 
+    # so Python knows which is which.
     return f"""
     <html>
         <head>
             <title>Bouldering Library</title>
             <style>
-                body {{ font-family: 'Segoe UI', Arial, sans-serif; background-color: #2c3e50; color: white; text-align: center; padding: 50px; margin: 0; }}
+                body {{
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    background-color: #2c3e50;
+                    color: white;
+                    text-align: center;
+                    padding: 50px;
+                    margin: 0;
+                }}
                 .dropdown {{ position: fixed; top: 20px; right: 20px; display: inline-block; z-index: 1000; }}
                 .dropbtn {{ background-color: #e67e22; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }}
                 .dropdown-content {{ display: none; position: absolute; right: 0; background-color: #34495e; min-width: 200px; border-radius: 5px; }}
@@ -31,8 +43,11 @@ def home():
                     <a href="https://www.youtube.com/watch?v=P8lh_Y2OdFk" target="_blank">OUTDOOR BOULDERING</a>
                 </div>
             </div>
+
             <h1>Welcome To The Bouldering Library</h1>
-            <img src="/static/hero.jpg" class="main-img">
+            
+            <img src="{image_url}" class="main-img" alt="Bouldering Hero">
+            
             <div class="sub-title">💥 THIS IS BOULDERING 💥</div>
             <p class="description">
                 Bouldering is a discipline in sport climbing. This revolutionary sport swept millions around the world with pure adrenaline. 
@@ -44,5 +59,6 @@ def home():
     """
 
 if __name__ == '__main__':
+    # This part ensures Render can assign the correct port
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=False)
