@@ -5,11 +5,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Attempting to generate URLs. 
-    # Note: If these files don't exist in the /static folder, Flask might error.
+    # Only 3 files needed in the static folder now: hero.jpg, climb1.mp4, climb3.mp4
     image_url = url_for('static', filename='hero.jpg')
     vid1_url = url_for('static', filename='climb1.mp4')
-    vid2_url = url_for('static', filename='climb2.mp4')
     vid3_url = url_for('static', filename='climb3.mp4')
     
     return f"""
@@ -25,6 +23,7 @@ def home():
                     padding: 20px;
                     margin: 0;
                 }}
+                /* --- Header --- */
                 .header-container {{
                     display: flex;
                     justify-content: space-between;
@@ -33,18 +32,10 @@ def home():
                     max-width: 1200px;
                     margin: 0 auto;
                 }}
-                .nav-buttons {{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                }}
-                .main-title {{
-                    font-size: 3.5em;
-                    color: white;
-                    margin: 0 20px;
-                    flex-grow: 1;
-                    font-weight: bold;
-                }}
+                .nav-buttons {{ display: flex; flex-direction: column; gap: 10px; }}
+                .main-title {{ font-size: 3.5em; color: white; margin: 0 20px; flex-grow: 1; font-weight: bold; }}
+                
+                /* --- Navigation --- */
                 .dropdown {{ position: relative; display: inline-block; z-index: 1000; }}
                 .dropbtn {{ background-color: #e67e22; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }}
                 .dropdown-content {{ display: none; position: absolute; right: 0; background-color: #34495e; min-width: 200px; border-radius: 5px; }}
@@ -53,28 +44,28 @@ def home():
                 .qa-btn {{ background-color: #3498db; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 140px; }}
                 .gyms-btn {{ background-color: #9b59b6; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 140px; }}
 
+                /* --- Images & Videos --- */
                 .main-img {{ 
                     width: 100%; 
                     max-width: 600px; 
                     border: 5px solid white; 
                     border-radius: 20px; 
-                    margin-top: 10px;
-                    margin-bottom: 20px; 
+                    margin-bottom: 30px; 
                 }}
 
                 .video-container {{
                     display: flex;
                     justify-content: center;
-                    gap: 15px;
-                    max-width: 1000px;
-                    margin: 0 auto 30px auto;
+                    gap: 30px;
+                    max-width: 1100px;
+                    margin: 0 auto 40px auto;
                 }}
                 .video-item {{
-                    width: 30%; 
+                    width: 45%; /* Increased size since there are only two */
                     aspect-ratio: 16/9;
                     object-fit: cover;
-                    border: 3px solid #e67e22;
-                    border-radius: 10px;
+                    border: 3px solid white; /* Changed from orange to white */
+                    border-radius: 15px;
                     background-color: black;
                 }}
 
@@ -86,6 +77,7 @@ def home():
                     color: #ecf0f1; 
                 }}
 
+                /* --- Modals --- */
                 .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }}
                 .modal-content {{ background-color: #34495e; margin: 10% auto; padding: 25px; border: 2px solid #e67e22; border-radius: 15px; width: 300px; text-align: left; position: relative; color: white; }}
                 .gyms-modal-content {{ background-color: #2c3e50; margin: 5% auto; padding: 40px; border: 3px solid white; border-radius: 20px; width: 80%; height: 70vh; position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; }}
@@ -119,9 +111,6 @@ def home():
                     <source src="{vid1_url}" type="video/mp4">
                 </video>
                 <video class="video-item" autoplay muted loop playsinline>
-                    <source src="{vid2_url}" type="video/mp4">
-                </video>
-                <video class="video-item" autoplay muted loop playsinline>
                     <source src="{vid3_url}" type="video/mp4">
                 </video>
             </div>
@@ -141,7 +130,6 @@ def home():
                     <div class="qa-item" onclick="openAnswer('No, typically a climb is between 3-5 meters. You have a good and safe Crash Pad.')">Are you climbing with a rope?</div>
                 </div>
             </div>
-
             <div id="answerModal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn" onclick="closeAnswer()">&times;</span>
@@ -149,7 +137,6 @@ def home():
                     <p id="answerText"></p>
                 </div>
             </div>
-
             <div id="gymsModal" class="modal">
                 <div class="gyms-modal-content">
                     <span class="close-btn" onclick="closeGyms()">&times;</span>
@@ -170,11 +157,8 @@ def home():
                 function closeAnswer() {{ document.getElementById("answerModal").style.display = "none"; }}
                 function openGyms() {{ document.getElementById("gymsModal").style.display = "block"; }}
                 function closeGyms() {{ document.getElementById("gymsModal").style.display = "none"; }}
-
                 window.onclick = function(event) {{
-                    if (event.target.className == "modal") {{
-                        event.target.style.display = "none";
-                    }}
+                    if (event.target.className == "modal") {{ event.target.style.display = "none"; }}
                 }}
             </script>
         </body>
