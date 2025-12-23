@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Only 3 files needed in the static folder now: hero.jpg, climb1.mp4, climb3.mp4
+    # We are using only these two video files from your static folder
     image_url = url_for('static', filename='hero.jpg')
     vid1_url = url_for('static', filename='climb1.mp4')
     vid3_url = url_for('static', filename='climb3.mp4')
@@ -23,7 +23,7 @@ def home():
                     padding: 20px;
                     margin: 0;
                 }}
-                /* --- Header --- */
+                /* --- Header Layout --- */
                 .header-container {{
                     display: flex;
                     justify-content: space-between;
@@ -35,7 +35,6 @@ def home():
                 .nav-buttons {{ display: flex; flex-direction: column; gap: 10px; }}
                 .main-title {{ font-size: 3.5em; color: white; margin: 0 20px; flex-grow: 1; font-weight: bold; }}
                 
-                /* --- Navigation --- */
                 .dropdown {{ position: relative; display: inline-block; z-index: 1000; }}
                 .dropbtn {{ background-color: #e67e22; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }}
                 .dropdown-content {{ display: none; position: absolute; right: 0; background-color: #34495e; min-width: 200px; border-radius: 5px; }}
@@ -44,7 +43,6 @@ def home():
                 .qa-btn {{ background-color: #3498db; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 140px; }}
                 .gyms-btn {{ background-color: #9b59b6; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 140px; }}
 
-                /* --- Images & Videos --- */
                 .main-img {{ 
                     width: 100%; 
                     max-width: 600px; 
@@ -53,20 +51,22 @@ def home():
                     margin-bottom: 30px; 
                 }}
 
+                /* --- Two-Video Row Styling --- */
                 .video-container {{
                     display: flex;
                     justify-content: center;
                     gap: 30px;
                     max-width: 1100px;
                     margin: 0 auto 40px auto;
+                    align-items: flex-start;
                 }}
                 .video-item {{
-                    width: 45%; /* Increased size since there are only two */
-                    aspect-ratio: 16/9;
-                    object-fit: cover;
-                    border: 3px solid white; /* Changed from orange to white */
+                    width: 45%; 
+                    height: auto; 
+                    object-fit: contain; 
+                    border: 3px solid white; 
                     border-radius: 15px;
-                    background-color: black;
+                    background-color: #1a252f;
                 }}
 
                 .description {{ 
