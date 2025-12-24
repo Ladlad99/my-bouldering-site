@@ -10,6 +10,7 @@ def home():
     qa_bg_url = url_for('static', filename='hero2.jpg')
     hero3_url = url_for('static', filename='hero3.jpg')
     hero6_url = url_for('static', filename='hero6.jpg')
+    hero4_url = url_for('static', filename='hero4.jpg') # New Slide
     vid1_url = url_for('static', filename='climb1.mp4')
     vid3_url = url_for('static', filename='climb3.mp4')
     
@@ -35,7 +36,7 @@ def home():
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    padding: 20px;
+                    padding: 40px 20px 20px 20px; /* Increased top padding to move buttons down */
                     max-width: 1200px;
                     margin: 0 auto;
                     position: relative;
@@ -45,16 +46,19 @@ def home():
                     left: 20px; 
                     display: flex; 
                     flex-direction: column; 
-                    gap: 10px; 
+                    gap: 12px; 
+                    top: 45px; /* Tiny bit down */
                 }}
                 .main-title {{ 
                     font-size: 2.5em; 
                     font-weight: 800; 
                     text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                    text-transform: uppercase;
                 }}
 
-                .qa-btn {{ background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
-                .gyms-btn {{ background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
+                .qa-btn {{ background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; transition: 0.3s; }}
+                .gyms-btn {{ background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; transition: 0.3s; }}
+                .qa-btn:hover, .gyms-btn:hover {{ transform: translateY(-2px); opacity: 0.9; }}
 
                 /* --- Hero Section --- */
                 .hero-container {{
@@ -64,6 +68,8 @@ def home():
                     justify-content: center;
                     align-items: center;
                     gap: 20px;
+                    /* Shifted container left to make the PIC symmetrical under the title */
+                    transform: translateX(-35px); 
                 }}
 
                 .click-hint {{
@@ -136,27 +142,27 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Red Scroll to Top Arrow --- */
+                /* --- Black Scroll to Top Arrow --- */
                 .back-to-top {{
                     position: fixed;
                     bottom: 30px;
                     right: 30px;
-                    background-color: #e74c3c; /* Red */
+                    background-color: #000000; /* Black */
                     color: white;
                     width: 50px;
                     height: 50px;
                     border-radius: 50%;
-                    display: none; /* Hidden by default */
+                    display: none; 
                     justify-content: center;
                     align-items: center;
                     cursor: pointer;
                     z-index: 1000;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
                     font-size: 24px;
-                    font-weight: bold;
                     transition: 0.3s;
+                    border: 1px solid rgba(255,255,255,0.2);
                 }}
-                .back-to-top:hover {{ background-color: #c0392b; transform: scale(1.1); }}
+                .back-to-top:hover {{ background-color: #333; transform: translateY(-5px); }}
 
                 /* --- Video Container --- */
                 .video-container {{
@@ -164,14 +170,10 @@ def home():
                     justify-content: center;
                     gap: 30px;
                     padding: 40px 20px;
+                    /* Reset the translate for videos so they stay centered */
+                    transform: translateX(0); 
                 }}
-                .video-item {{ 
-                    width: 25%; 
-                    max-height: 200px; 
-                    object-fit: cover; 
-                    border-radius: 16px; 
-                    border: 1px solid white; 
-                }}
+                .video-item {{ width: 25%; max-height: 200px; object-fit: cover; border-radius: 16px; border: 1px solid white; }}
 
                 /* --- QA Section (Bottom) --- */
                 .qa-section {{
@@ -221,14 +223,13 @@ def home():
 
                 /* --- Mobile --- */
                 @media (max-width: 768px) {{
-                    .header-container {{ padding-top: 100px; }}
+                    .header-container {{ padding-top: 110px; }}
                     .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; }}
-                    .hero-container {{ gap: 5px; margin-top: 40px; justify-content: space-around; }}
+                    .hero-container {{ gap: 5px; margin-top: 40px; transform: translateX(0); }} /* Center on mobile */
                     .click-hint {{ font-size: 0.7em; width: 50px; text-align: right; }}
                     .hero-wrapper {{ height: 320px; width: 260px; }}
                     .video-item {{ width: 45%; }}
                     .gyms-modal-content {{ grid-template-columns: 1fr; height: 85vh; }}
-                    .gym-box {{ font-size: 1.1em; }}
                 }}
             </style>
         </head>
@@ -257,6 +258,12 @@ def home():
                         <div class="nav-arrow prev" onclick="event.stopPropagation(); changeSlide(-1)">&#10094;</div>
                         <div class="slide-content">It grew from lead outdoor climbers who needed to train in winter. Today, it is a sport in its own right!</div>
                         <div class="nav-arrow next" onclick="event.stopPropagation(); changeSlide(1)">&#10095;</div>
+                    </div>
+
+                    <div id="slide3" class="slide" style="background-image: url('{hero4_url}');" onclick="stopSlider()">
+                        <div class="nav-arrow prev" onclick="event.stopPropagation(); changeSlide(-1)">&#10094;</div>
+                        <div class="slide-content">Today bouldering starts from a simple ladder, all the way to the Olympics!</div>
+                        <button class="nav-arrow next" onclick="event.stopPropagation(); changeSlide(1)">&#10095;</button>
                     </div>
                 </div>
             </div>
@@ -298,6 +305,7 @@ def home():
 
             <script>
                 let currentSlide = 0;
+                const totalSlides = 3;
 
                 function startSlider() {{
                     document.getElementById("heroImage").style.display = "none";
@@ -310,18 +318,20 @@ def home():
                     document.getElementById("hintText").style.visibility = "visible";
                     document.getElementById("slide1").style.display = "none";
                     document.getElementById("slide2").style.display = "none";
+                    document.getElementById("slide3").style.display = "none";
                 }}
 
                 function changeSlide(n) {{
                     currentSlide += n;
-                    if (currentSlide > 2) currentSlide = 1;
-                    if (currentSlide < 1) currentSlide = 2;
+                    if (currentSlide > totalSlides) currentSlide = 1;
+                    if (currentSlide < 1) currentSlide = totalSlides;
                     showSlide(currentSlide);
                 }}
 
                 function showSlide(n) {{
                     document.getElementById("slide1").style.display = (n === 1) ? "flex" : "none";
                     document.getElementById("slide2").style.display = (n === 2) ? "flex" : "none";
+                    document.getElementById("slide3").style.display = (n === 3) ? "flex" : "none";
                 }}
 
                 function scrollToQA() {{
@@ -357,3 +367,7 @@ def home():
         </body>
     </html>
     """
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
