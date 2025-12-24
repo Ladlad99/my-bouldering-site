@@ -34,11 +34,16 @@ def home():
                 .nav-buttons {{ display: flex; flex-direction: column; gap: 10px; }}
                 .main-title {{ font-size: 3.5em; color: white; margin: 0 20px; flex-grow: 1; font-weight: bold; }}
                 
+                /* --- Hover Logic for Buttons --- */
+                .nav-group {{ position: relative; display: inline-block; }}
+                .nav-group:hover .modal {{ display: block; }}
+
                 .dropdown {{ position: relative; display: inline-block; z-index: 1000; }}
                 .dropbtn {{ background-color: #e67e22; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }}
                 .dropdown-content {{ display: none; position: absolute; right: 0; background-color: #34495e; min-width: 200px; border-radius: 5px; }}
                 .dropdown-content a {{ color: white; padding: 12px 16px; text-decoration: none; display: block; text-align: right; }}
                 .dropdown:hover .dropdown-content {{ display: block; }}
+                
                 .qa-btn {{ background-color: #3498db; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 140px; }}
                 .gyms-btn {{ background-color: #9b59b6; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 140px; }}
 
@@ -50,7 +55,6 @@ def home():
                     margin-bottom: 30px; 
                 }}
 
-                /* --- Extra Small Two-Video Row --- */
                 .video-container {{
                     display: flex;
                     justify-content: center;
@@ -60,14 +64,14 @@ def home():
                     align-items: center;
                 }}
                 .video-item {{
-                    width: 25%; /* Sized down to 25% */
+                    width: 25%; 
                     height: auto; 
                     max-height: 250px; 
                     object-fit: contain; 
                     border: 3px solid white; 
                     border-radius: 12px;
                     background-color: #1a252f;
-                    box-shadow: 0 10px 20px rgba(0,0,0,0.3); /* Subtle Shadow */
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
                 }}
 
                 .description {{ 
@@ -78,8 +82,18 @@ def home():
                     color: #ecf0f1; 
                 }}
 
-                /* --- Modals --- */
-                .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }}
+                /* --- Modals Adjusted for Hover --- */
+                .modal {{ 
+                    display: none; 
+                    position: fixed; 
+                    z-index: 2000; 
+                    left: 0; top: 0; 
+                    width: 100%; height: 100%; 
+                    background-color: rgba(0,0,0,0.7); 
+                }}
+                /* This class ensures the modal stays open while the mouse is over the content */
+                .modal:hover {{ display: block; }}
+
                 .modal-content {{ background-color: #34495e; margin: 10% auto; padding: 25px; border: 2px solid #e67e22; border-radius: 15px; width: 300px; text-align: left; position: relative; color: white; }}
                 .gyms-modal-content {{ background-color: #2c3e50; margin: 5% auto; padding: 40px; border: 3px solid white; border-radius: 20px; width: 80%; height: 70vh; position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; }}
                 .close-btn {{ color: #bdc3c7; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; z-index: 2001; }}
@@ -91,10 +105,16 @@ def home():
         <body>
             <div class="header-container">
                 <div class="nav-buttons">
-                    <button class="qa-btn" onclick="openQA()">QA ❓</button>
-                    <button class="gyms-btn" onclick="openGyms()">Gyms In TLV</button>
+                    <div class="nav-group" onmouseenter="openQA()" onmouseleave="closeQA()">
+                        <button class="qa-btn">QA ❓</button>
+                    </div>
+                    <div class="nav-group" onmouseenter="openGyms()" onmouseleave="closeGyms()">
+                        <button class="gyms-btn">Gyms In TLV</button>
+                    </div>
                 </div>
+
                 <div class="main-title">💥 THIS IS BOULDERING 💥</div>
+
                 <div class="dropdown">
                     <button class="dropbtn">MENU ☰</button>
                     <div class="dropdown-content">
@@ -123,7 +143,7 @@ def home():
             </p>
 
             <div id="qaModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content" onmouseenter="keepOpenQA()" onmouseleave="closeQA()">
                     <span class="close-btn" onclick="closeQA()">&times;</span>
                     <h3>Common Questions</h3>
                     <div class="qa-item" onclick="openAnswer('Bouldering fits everybody! From a simple ladder to a world-class climb.')">Is Bouldering hard?</div>
@@ -131,6 +151,7 @@ def home():
                     <div class="qa-item" onclick="openAnswer('No, typically a climb is between 3-5 meters. You have a good and safe Crash Pad.')">Are you climbing with a rope?</div>
                 </div>
             </div>
+
             <div id="answerModal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn" onclick="closeAnswer()">&times;</span>
@@ -138,8 +159,9 @@ def home():
                     <p id="answerText"></p>
                 </div>
             </div>
+
             <div id="gymsModal" class="modal">
-                <div class="gyms-modal-content">
+                <div class="gyms-modal-content" onmouseenter="keepOpenGyms()" onmouseleave="closeGyms()">
                     <span class="close-btn" onclick="closeGyms()">&times;</span>
                     <a href="https://www.isaacclimbing.com" target="_blank" class="gym-box issac">Issac Climbing gym</a>
                     <a href="https://www.thebloc.co.il/tlv" target="_blank" class="gym-box block">Block Climbing Gym</a>
@@ -151,13 +173,18 @@ def home():
             <script>
                 function openQA() {{ document.getElementById("qaModal").style.display = "block"; }}
                 function closeQA() {{ document.getElementById("qaModal").style.display = "none"; }}
+                function keepOpenQA() {{ document.getElementById("qaModal").style.display = "block"; }}
+
+                function openGyms() {{ document.getElementById("gymsModal").style.display = "block"; }}
+                function closeGyms() {{ document.getElementById("gymsModal").style.display = "none"; }}
+                function keepOpenGyms() {{ document.getElementById("gymsModal").style.display = "block"; }}
+
                 function openAnswer(text) {{
                     document.getElementById("answerText").innerText = text;
                     document.getElementById("answerModal").style.display = "block";
                 }}
                 function closeAnswer() {{ document.getElementById("answerModal").style.display = "none"; }}
-                function openGyms() {{ document.getElementById("gymsModal").style.display = "block"; }}
-                function closeGyms() {{ document.getElementById("gymsModal").style.display = "none"; }}
+
                 window.onclick = function(event) {{
                     if (event.target.className == "modal") {{ event.target.style.display = "none"; }}
                 }}
