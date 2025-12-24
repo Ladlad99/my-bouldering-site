@@ -7,14 +7,14 @@ app = Flask(__name__)
 def home():
     image_url = url_for('static', filename='hero.jpg')
     qa_bg_url = url_for('static', filename='hero2.jpg')
-    hero3_url = url_for('static', filename='hero3.jpg') # Background for the text swap
+    hero3_url = url_for('static', filename='hero3.jpg')
     vid1_url = url_for('static', filename='climb1.mp4')
     vid3_url = url_for('static', filename='climb3.mp4')
     
     return f"""
     <html>
         <head>
-            <title>Bouldering Library</title>
+            <title>The Bouldering Library</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {{
@@ -25,6 +25,7 @@ def home():
                     padding: 10px;
                     margin: 0;
                 }}
+                
                 /* --- Header --- */
                 .header-container {{
                     display: flex;
@@ -46,12 +47,38 @@ def home():
                 .qa-btn {{ background-color: #3498db; color: white; padding: 10px; font-size: 14px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 130px; }}
                 .gyms-btn {{ background-color: #9b59b6; color: white; padding: 10px; font-size: 14px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 130px; }}
 
-                /* --- Sized Down Hero Section --- */
+                /* --- Hero & Pop-up --- */
+                .hero-container {{
+                    position: relative;
+                    display: inline-block;
+                    margin: 20px auto;
+                }}
+
+                .click-hint {{
+                    position: absolute;
+                    left: -110px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: #e67e22;
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    font-size: 0.9em;
+                    animation: float 2s infinite ease-in-out;
+                }}
+                .click-hint::after {{
+                    content: ' →';
+                }}
+
+                @keyframes float {{
+                    0%, 100% {{ transform: translateY(-50%) translateX(0); }}
+                    50% {{ transform: translateY(-50%) translateX(10px); }}
+                }}
+
                 .hero-wrapper {{
                     width: 100%;
-                    max-width: 500px; /* Reduced size to fit screen without scroll */
+                    max-width: 500px;
                     height: 350px;
-                    margin: 0 auto 20px auto;
                     border: 5px solid white;
                     border-radius: 20px;
                     overflow: hidden;
@@ -59,11 +86,7 @@ def home():
                     position: relative;
                 }}
                 
-                .main-img {{ 
-                    width: 100%; 
-                    height: 100%;
-                    object-fit: cover;
-                }}
+                .main-img {{ width: 100%; height: 100%; object-fit: cover; }}
 
                 .description-overlay {{
                     display: none;
@@ -88,13 +111,7 @@ def home():
                     max-width: 1100px;
                     margin: 0 auto 20px auto;
                 }}
-                .video-item {{
-                    width: 20%; 
-                    max-height: 180px; 
-                    object-fit: contain; 
-                    border: 2px solid white; 
-                    border-radius: 12px;
-                }}
+                .video-item {{ width: 20%; max-height: 180px; object-fit: contain; border: 2px solid white; border-radius: 12px; }}
 
                 /* --- Modals --- */
                 .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); }}
@@ -102,29 +119,54 @@ def home():
                 .modal-content-qa {{ 
                     background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{qa_bg_url}');
                     background-size: cover;
+                    background-position: center; /* Fixed for Desktop */
                     margin: 5% auto; 
                     padding: 40px; 
                     border: 3px solid #3498db; 
                     border-radius: 20px; 
                     width: 60%;
                     color: white; 
+                    position: relative;
                 }}
 
-                .gyms-modal-content {{ background-color: #2c3e50; margin: 5% auto; padding: 40px; border: 3px solid white; border-radius: 20px; width: 80%; height: 70vh; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; }}
+                .gyms-modal-content {{ 
+                    background-color: #2c3e50; 
+                    margin: 5% auto; 
+                    padding: 40px; 
+                    border: 3px solid white; 
+                    border-radius: 20px; 
+                    width: 80%; 
+                    height: 70vh; 
+                    display: grid; 
+                    grid-template-columns: 1fr 1fr; 
+                    grid-template-rows: 1fr 1fr; 
+                    gap: 20px; 
+                    position: relative;
+                }}
                 
-                .close-btn {{ color: #ffffff; position: absolute; top: 15px; right: 25px; font-size: 35px; font-weight: bold; cursor: pointer; }}
+                .close-btn {{ color: #ffffff; position: absolute; top: 15px; right: 25px; font-size: 35px; font-weight: bold; cursor: pointer; z-index: 10; }}
                 
                 .qa-item {{ cursor: pointer; padding: 15px; font-size: 1.3em; border-bottom: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.2); margin-bottom: 10px; border-radius: 5px; text-align: left; }}
 
-                .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.8em; font-weight: bold; text-decoration: none; border-radius: 15px; border: 2px dashed rgba(255,255,255,0.2); }}
+                .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.8em; font-weight: bold; text-decoration: none; border-radius: 15px; border: 2px dashed rgba(255,255,255,0.2); text-align: center; padding: 10px; }}
                 .issac {{ color: #ff69b4; }} .block {{ color: #ffff00; }} .performance {{ color: #2ecc71; }} .viking {{ color: #3498db; }}
 
                 /* Mobile Responsiveness */
                 @media (max-width: 768px) {{
+                    .click-hint {{ left: 10px; top: -40px; transform: rotate(-90deg); }} /* Move hint above on mobile */
                     .header-container {{ flex-direction: column; }}
+                    .main-title {{ font-size: 1.8em; margin: 10px 0; }}
                     .video-container {{ flex-direction: row; gap: 10px; }}
                     .video-item {{ width: 45%; }}
-                    .gyms-modal-content {{ grid-template-columns: 1fr; overflow-y: auto; }}
+                    .gyms-modal-content {{ 
+                        grid-template-columns: 1fr; 
+                        grid-template-rows: repeat(4, 1fr); /* Forces 4 even rows */
+                        height: 80vh; 
+                        padding: 50px 20px 20px 20px;
+                        overflow-y: auto; 
+                    }}
+                    .gym-box {{ font-size: 1.2em; height: 100%; }}
+                    .modal-content-qa {{ width: 85%; padding: 20px; }}
                 }}
             </style>
         </head>
@@ -135,7 +177,7 @@ def home():
                     <button class="gyms-btn" onclick="openGyms()">Gyms In TLV</button>
                 </div>
 
-                <div class="main-title">The Boulder Coach</div>
+                <div class="main-title">The Bouldering Library</div>
 
                 <div class="dropdown">
                     <button class="dropbtn">MENU ☰</button>
@@ -147,12 +189,15 @@ def home():
                 </div>
             </div>
 
-            <div class="hero-wrapper" onclick="toggleDescription()">
-                <img src="{image_url}" id="heroImage" class="main-img" alt="Bouldering Hero">
-                <div id="heroDescription" class="description-overlay">
-                    Bouldering is a discipline in sport climbing. This revolutionary sport swept millions around the world with pure adrenaline. 
-                    It became an Olympic sport with Lead and Speed climbing at the Olympic Games of Tokyo 2020. 
-                    Come and join this amazing sport!
+            <div class="hero-container">
+                <div class="click-hint">Click Here!</div>
+                <div class="hero-wrapper" onclick="toggleDescription()">
+                    <img src="{image_url}" id="heroImage" class="main-img" alt="Bouldering Hero">
+                    <div id="heroDescription" class="description-overlay">
+                        Bouldering is a discipline in sport climbing. This revolutionary sport swept millions around the world with pure adrenaline. 
+                        It became an Olympic sport with Lead and Speed climbing at the Olympic Games of Tokyo 2020. 
+                        Come and join this amazing sport!
+                    </div>
                 </div>
             </div>
             
@@ -168,7 +213,7 @@ def home():
             <div id="qaModal" class="modal">
                 <div class="modal-content-qa">
                     <span class="close-btn" onclick="closeQA()">&times;</span>
-                    <h2 style="font-size: 2.5em; margin-bottom: 20px;">Common Questions</h2>
+                    <h2 style="font-size: 2.2em; margin-bottom: 20px;">Common Questions</h2>
                     <div class="qa-item" onclick="openAnswer('Bouldering fits everybody! From a simple ladder to a world-class climb.')">Is Bouldering hard?</div>
                     <div class="qa-item" onclick="openAnswer('You can rent climbing shoes at every gym')">I heard you need special shoes?</div>
                     <div class="qa-item" onclick="openAnswer('No, typically a climb is between 3-5 meters. also You have a good and safe mattress.')">Are you climbing with a rope?</div>
@@ -176,10 +221,10 @@ def home():
             </div>
 
             <div id="answerModal" class="modal">
-                <div class="modal-content-qa" style="border-color: #e67e22; width: 50%;">
+                <div class="modal-content-qa" style="border-color: #e67e22; width: 50%; min-height: auto;">
                     <span class="close-btn" onclick="closeAnswer()">&times;</span>
-                    <h2 style="font-size: 2em; color: #e67e22;">Explanation</h2>
-                    <p id="answerText" style="font-size: 1.8em; line-height: 1.4;"></p>
+                    <h2 style="font-size: 1.8em; color: #e67e22;">Explanation</h2>
+                    <p id="answerText" style="font-size: 1.5em; line-height: 1.4;"></p>
                 </div>
             </div>
 
