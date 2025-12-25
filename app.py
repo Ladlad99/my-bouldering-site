@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Asset URLs
     image_url = url_for('static', filename='hero.jpg')
     qa_bg_url = url_for('static', filename='hero2.jpg')
     hero3_url = url_for('static', filename='hero3.jpg')
@@ -69,6 +68,8 @@ def home():
                     justify-content: center;
                     align-items: center;
                     gap: 20px;
+                    /* Shifted slightly left (-15px) to align visually while keeping image centered */
+                    transform: translateX(-15px); 
                 }}
 
                 .click-hint {{
@@ -81,12 +82,12 @@ def home():
                 /* --- Chalkboard Shop Style (Slant & Upper Right) --- */
                 .shop-hint-chalk {{
                     position: absolute;
-                    top: -40px;
-                    right: 20px;
+                    top: -55px; /* Moved slightly higher */
+                    right: 0px; /* Adjusted position */
                     font-family: 'Architects Daughter', cursive;
                     font-size: 1.8em;
                     color: #fdfdfd;
-                    transform: rotate(-8deg); /* Slant */
+                    transform: rotate(-8deg);
                     cursor: pointer;
                     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
                     transition: 0.3s;
@@ -176,8 +177,12 @@ def home():
                     background: rgba(255,255,255,0.1);
                     border-color: #3498db;
                 }}
-                .shop-item i {{ font-size: 3.5em; color: #3498db; margin-bottom: 15px; display: block; }}
-                .shop-item span {{ font-weight: bold; font-size: 1.2em; }}
+                .emoji-icon {{
+                    font-size: 4em;
+                    margin-bottom: 15px;
+                    display: block;
+                }}
+                .shop-item span {{ font-weight: bold; font-size: 1.3em; }}
 
                 /* --- Video Container --- */
                 .video-container {{ display: flex; justify-content: center; gap: 30px; padding: 40px 20px; }}
@@ -237,7 +242,7 @@ def home():
                 @media (max-width: 768px) {{
                     .header-container {{ padding-top: 110px; }}
                     .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; }}
-                    .hero-container {{ gap: 5px; margin-top: 60px; flex-direction: column; }}
+                    .hero-container {{ gap: 5px; margin-top: 60px; flex-direction: column; transform: translateX(0); }}
                     .shop-hint-chalk {{ position: relative; top: 0; right: 0; transform: rotate(-3deg); margin-top: 10px; }}
                     .hero-wrapper {{ height: 320px; width: 90vw; }}
                     .shop-grid {{ grid-template-columns: 1fr; }}
@@ -292,15 +297,15 @@ def home():
                     <h2 style="font-size: 2.5em; color: #3498db;">Our Shop</h2>
                     <div class="shop-grid">
                         <div class="shop-item">
-                            <i class="fas fa-clipboard-list"></i>
+                            <span class="emoji-icon">📝</span>
                             <span>training plan</span>
                         </div>
                         <div class="shop-item">
-                            <i class="fas fa-laptop-code"></i>
+                            <span class="emoji-icon">💻</span>
                             <span>online coaching</span>
                         </div>
                         <div class="shop-item">
-                            <i class="fas fa-user-check"></i>
+                            <span class="emoji-icon">🤜🤛</span>
                             <span>1 on 1 session</span>
                         </div>
                     </div>
