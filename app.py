@@ -11,7 +11,7 @@ def home():
     hero3_url = url_for('static', filename='hero3.jpg')
     hero6_url = url_for('static', filename='hero6.jpg')
     hero4_url = url_for('static', filename='hero4.jpg')
-    hero5_url = url_for('static', filename='hero5.jpg') # Used for Shop BG
+    hero5_url = url_for('static', filename='hero5.jpg')
     vid1_url = url_for('static', filename='climb1.mp4')
     vid3_url = url_for('static', filename='climb3.mp4')
     
@@ -20,7 +20,6 @@ def home():
         <head>
             <title>The Bouldering Library</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
             <style>
                 body {{
@@ -32,7 +31,7 @@ def home():
                     margin: 0;
                     min-height: 100vh;
                     scroll-behavior: smooth;
-                    overflow-x: hidden; /* Prevent horizontal scroll from absolute elements */
+                    overflow-x: hidden;
                 }}
 
                 /* --- Header --- */
@@ -50,7 +49,7 @@ def home():
                     left: 20px; 
                     display: flex; 
                     flex-direction: column; 
-                    gap: 12px; 
+                    gap: 15px; 
                     top: 55px;
                 }}
                 .main-title {{ 
@@ -60,22 +59,39 @@ def home():
                     text-transform: uppercase;
                 }}
 
-                .qa-btn {{ background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
-                .gyms-btn {{ background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
+                /* --- Natural "Stone" Look Buttons --- */
+                .btn-natural {{
+                    background: rgba(255, 255, 255, 0.1);
+                    backdrop-filter: blur(5px);
+                    color: #ecf0f1;
+                    padding: 12px;
+                    border: 1px solid rgba(255, 255, 255, 0.4);
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    width: 150px;
+                    transition: all 0.3s ease;
+                    text-transform: uppercase;
+                    font-size: 0.9em;
+                    letter-spacing: 1px;
+                }}
+                .btn-natural:hover {{
+                    background: rgba(255, 255, 255, 0.25);
+                    border-color: #fff;
+                    transform: translateY(-2px);
+                }}
 
-                /* --- Hero Section (New Positioning Strategy) --- */
+                /* --- Hero Section --- */
                 .hero-container {{
                     position: relative;
                     margin: 40px auto;
-                    width: 550px; /* Fixed width matching image wrapper */
+                    width: 550px;
                     max-width: 80vw;
-                    /* This ensures the container (and image) is perfectly centered */
                 }}
 
-                /* Hints are positioned absolute relative to the centered image container */
                 .click-hint {{
                     position: absolute;
-                    left: -180px; /* Push left outside the image */
+                    left: -180px;
                     top: 50%;
                     transform: translateY(-50%);
                     color: white;
@@ -88,7 +104,7 @@ def home():
                 .shop-hint-chalk {{
                     position: absolute;
                     top: -40px;
-                    right: -100px; /* Push right and up */
+                    right: -100px;
                     font-family: 'Architects Daughter', cursive;
                     font-size: 1.8em;
                     color: #fdfdfd;
@@ -165,64 +181,67 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Shop Modal Style (Elegant & Hero5 BG) --- */
+                /* --- Shop Modal Style (Brighter & Smaller) --- */
                 .shop-modal-content {{
-                    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{hero5_url}');
+                    /* Brighter overlay (0.2 instead of 0.6) so image shows through */
+                    background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('{hero5_url}');
                     background-size: cover;
                     background-position: center;
-                    margin: 10vh auto;
-                    padding: 60px 40px;
-                    border: 1px solid rgba(255,255,255,0.3);
+                    margin: 15vh auto;
+                    padding: 40px;
+                    border: 1px solid rgba(255,255,255,0.4);
                     border-radius: 30px;
-                    width: 80%;
-                    max-width: 900px;
+                    width: 70%;
+                    max-width: 800px;
                     position: relative;
-                    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+                    box-shadow: 0 0 50px rgba(0,0,0,0.3);
                     text-align: center;
                 }}
 
                 .shop-grid {{
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
+                    display: flex;
+                    justify-content: center;
                     gap: 30px;
-                    margin-top: 50px;
+                    margin-top: 20px; /* Less margin since title is gone */
+                    flex-wrap: wrap;
                 }}
                 
                 .shop-item {{
-                    background: rgba(255, 255, 255, 0.1); /* Glass effect */
-                    backdrop-filter: blur(10px);
-                    -webkit-backdrop-filter: blur(10px);
-                    padding: 40px 15px;
-                    border-radius: 24px;
-                    transition: all 0.4s ease;
+                    /* Brighter/Whiter background for glass effect */
+                    background: rgba(255, 255, 255, 0.15); 
+                    backdrop-filter: blur(4px);
+                    padding: 20px;
+                    width: 160px; /* Smaller fixed width */
+                    height: 160px; /* Square shape */
+                    border-radius: 20px;
+                    transition: all 0.3s ease;
                     cursor: pointer;
-                    border: 1px solid rgba(255,255,255,0.2);
+                    border: 1px solid rgba(255,255,255,0.3);
                     display: flex;
                     flex-direction: column;
                     align-items: center;
+                    justify-content: center;
                 }}
 
                 .shop-item:hover {{
-                    transform: translateY(-10px) scale(1.05);
-                    background: rgba(255,255,255,0.2);
+                    transform: translateY(-5px) scale(1.05);
+                    background: rgba(255,255,255,0.3); /* Even brighter on hover */
                     border-color: #ffffff;
-                    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
                 }}
 
                 .emoji-icon {{
-                    font-size: 4.5em;
-                    margin-bottom: 20px;
+                    font-size: 3.5em; /* Smaller icons */
+                    margin-bottom: 10px;
                     display: block;
-                    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+                    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
                 }}
                 
                 .shop-item span {{ 
-                    font-weight: 700; 
-                    font-size: 1.4em; 
+                    font-weight: 600; 
+                    font-size: 1em; /* Smaller text */
                     text-transform: capitalize;
-                    letter-spacing: 0.5px;
                     color: #fff;
-                    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+                    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
                 }}
 
                 /* --- Video Container --- */
@@ -233,7 +252,7 @@ def home():
                 .qa-section {{
                     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{qa_bg_url}');
                     background-size: cover; background-position: center; background-attachment: fixed;
-                    padding: 60px 20px; margin-top: 50px; border-top: 2px solid #3498db;
+                    padding: 60px 20px; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.2);
                 }}
                 .qa-content {{ max-width: 800px; margin: 0 auto; }}
                 .qa-row {{ margin-bottom: 15px; text-align: left; }}
@@ -268,14 +287,13 @@ def home():
                 @media (max-width: 768px) {{
                     .header-container {{ padding-top: 110px; }}
                     .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; }}
-                    /* Mobile: Hints stack above/below to fit screen */
                     .hero-container {{ width: 100%; margin-top: 50px; flex-direction: column; }}
                     .click-hint {{ position: relative; left: auto; top: auto; transform: none; margin-bottom: 10px; animation: none; }}
                     .shop-hint-chalk {{ position: relative; top: auto; right: auto; margin-top: 10px; transform: rotate(-3deg); }}
                     .hero-wrapper {{ height: 320px; width: 90vw; }}
-                    .shop-grid {{ grid-template-columns: 1fr; }}
-                    .gym-grid {{ grid-template-columns: 1fr; }}
                     .shop-modal-content {{ width: 90%; padding: 40px 20px; }}
+                    .shop-grid {{ justify-content: center; }}
+                    .gym-grid {{ grid-template-columns: 1fr; }}
                 }}
             </style>
         </head>
@@ -283,8 +301,8 @@ def home():
             <div id="top"></div>
             <div class="header-container">
                 <div class="nav-buttons">
-                    <button class="qa-btn" onclick="scrollToQA()">QA ❓</button>
-                    <button class="gyms-btn" onclick="openGyms()">Gyms In TLV</button>
+                    <button class="btn-natural" onclick="scrollToQA()">QA ❓</button>
+                    <button class="btn-natural" onclick="openGyms()">Gyms In TLV</button>
                 </div>
                 <div class="main-title">The Bouldering Library</div>
             </div>
@@ -325,7 +343,6 @@ def home():
             <div id="shopModal" class="modal">
                 <div class="shop-modal-content">
                     <span class="close-btn" onclick="closeShop()">&times;</span>
-                    <h2 style="font-size: 3em; margin-bottom: 20px; font-family: 'Architects Daughter', cursive;">Our Shop</h2>
                     <div class="shop-grid">
                         <div class="shop-item">
                             <span class="emoji-icon">📝</span>
