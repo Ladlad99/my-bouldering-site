@@ -18,6 +18,7 @@ def home():
         <head>
             <title>The Bouldering Library</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <style>
                 body {{
                     font-family: 'Segoe UI', Roboto, sans-serif;
@@ -35,7 +36,7 @@ def home():
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    padding: 45px 20px 20px 20px; /* Moves title and content down */
+                    padding: 45px 20px 20px 20px;
                     max-width: 1200px;
                     margin: 0 auto;
                     position: relative;
@@ -46,7 +47,7 @@ def home():
                     display: flex; 
                     flex-direction: column; 
                     gap: 12px; 
-                    top: 55px; /* Moves buttons slightly down */
+                    top: 55px;
                 }}
                 .main-title {{ 
                     font-size: 2.5em; 
@@ -58,7 +59,7 @@ def home():
                 .qa-btn {{ background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
                 .gyms-btn {{ background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
 
-                /* --- Hero Section Symmetry Fix --- */
+                /* --- Hero Section & Shop Hint --- */
                 .hero-container {{
                     position: relative;
                     margin: 20px auto;
@@ -66,8 +67,8 @@ def home():
                     justify-content: center;
                     align-items: center;
                     gap: 20px;
-                    /* Shifted to compensate for the hint text on the left */
-                    transform: translateX(-35px); 
+                    /* Keeps image centered under title */
+                    transform: translateX(0); 
                 }}
 
                 .click-hint {{
@@ -75,12 +76,20 @@ def home():
                     font-weight: bold;
                     font-size: 1em;
                     animation: floatHint 2s infinite ease-in-out;
+                    cursor: default;
                 }}
 
-                @keyframes floatHint {{
-                    0%, 100% {{ transform: translateX(0); }}
-                    50% {{ transform: translateX(-10px); }}
+                .shop-hint {{
+                    color: #2ecc71; /* Green for shop */
+                    font-weight: bold;
+                    font-size: 1em;
+                    animation: floatShop 2s infinite ease-in-out;
+                    cursor: pointer;
+                    text-decoration: underline;
                 }}
+
+                @keyframes floatHint {{ 0%, 100% {{ transform: translateX(0); }} 50% {{ transform: translateX(-10px); }} }}
+                @keyframes floatShop {{ 0%, 100% {{ transform: translateX(0); }} 50% {{ transform: translateX(10px); }} }}
 
                 .hero-wrapper {{
                     width: 550px;
@@ -120,6 +129,22 @@ def home():
                     margin-bottom: 10px;
                 }}
 
+                /* --- Shop Modal Icons --- */
+                .shop-grid {{
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 20px;
+                    margin-top: 30px;
+                }}
+                .shop-item {{
+                    transition: transform 0.3s ease;
+                    cursor: pointer;
+                    padding: 20px;
+                }}
+                .shop-item:hover {{ transform: scale(1.2); }}
+                .shop-item i {{ font-size: 3em; color: #2ecc71; margin-bottom: 10px; display: block; }}
+                .shop-item span {{ font-weight: bold; font-size: 1.1em; color: white; }}
+
                 .nav-arrow {{
                     position: absolute;
                     top: 50%;
@@ -140,7 +165,7 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Sleek Black Back to Top --- */
+                /* --- Back to Top --- */
                 .back-to-top {{
                     position: fixed;
                     bottom: 30px;
@@ -161,68 +186,48 @@ def home():
                 }}
 
                 /* --- Video Container --- */
-                .video-container {{
-                    display: flex;
-                    justify-content: center;
-                    gap: 30px;
-                    padding: 40px 20px;
-                    transform: translateX(0); /* Reset centering */
-                }}
+                .video-container {{ display: flex; justify-content: center; gap: 30px; padding: 40px 20px; }}
                 .video-item {{ width: 25%; max-height: 200px; object-fit: cover; border-radius: 16px; border: 1px solid white; }}
 
                 /* --- QA Section (Bottom) --- */
                 .qa-section {{
                     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{qa_bg_url}');
-                    background-size: cover;
-                    background-position: center;
-                    background-attachment: fixed;
-                    padding: 60px 20px;
-                    margin-top: 50px;
-                    border-top: 2px solid #3498db;
+                    background-size: cover; background-position: center; background-attachment: fixed;
+                    padding: 60px 20px; margin-top: 50px; border-top: 2px solid #3498db;
                 }}
                 .qa-content {{ max-width: 800px; margin: 0 auto; }}
                 .qa-row {{ margin-bottom: 15px; text-align: left; }}
                 .qa-question {{
-                    padding: 20px;
-                    background: rgba(255,255,255,0.1);
-                    backdrop-filter: blur(5px);
-                    border-radius: 12px;
-                    cursor: pointer;
-                    font-weight: bold;
-                    display: flex;
-                    justify-content: space-between;
-                    border: 1px solid rgba(255,255,255,0.1);
-                    font-size: 1.2em;
+                    padding: 20px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+                    border-radius: 12px; cursor: pointer; font-weight: bold; display: flex;
+                    justify-content: space-between; border: 1px solid rgba(255,255,255,0.1); font-size: 1.2em;
                 }}
                 .qa-answer {{
-                    max-height: 0;
-                    overflow: hidden;
-                    transition: all 0.4s ease;
-                    padding: 0 20px;
-                    color: #3498db;
-                    font-size: 1.1em;
-                    background: rgba(0,0,0,0.3);
-                    border-radius: 0 0 12px 12px;
+                    max-height: 0; overflow: hidden; transition: all 0.4s ease; padding: 0 20px;
+                    color: #3498db; font-size: 1.1em; background: rgba(0,0,0,0.3); border-radius: 0 0 12px 12px;
                 }}
                 .qa-answer.show {{ max-height: 200px; padding: 15px 20px; border: 1px solid rgba(52, 152, 219, 0.3); border-top: none; }}
 
-                /* --- Gym Modal --- */
+                /* --- Modal Styles --- */
                 .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }}
-                .gyms-modal-content {{ 
+                .modal-content {{ 
                     background: #1e2a38; margin: 10vh auto; padding: 60px 20px 20px; 
                     border: 2px solid white; border-radius: 24px; width: 80%; height: 70vh;
-                    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; position: relative;
+                    position: relative; overflow-y: auto;
                 }}
                 .close-btn {{ position: absolute; top: 15px; right: 25px; font-size: 35px; cursor: pointer; }}
+                .gym-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%; }}
                 .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.6em; font-weight: bold; text-decoration: none; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.4); padding: 15px; text-align: center; }}
 
                 /* --- Mobile --- */
                 @media (max-width: 768px) {{
                     .header-container {{ padding-top: 110px; }}
                     .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; }}
-                    .hero-container {{ gap: 5px; margin-top: 40px; transform: translateX(0); }}
-                    .click-hint {{ font-size: 0.7em; width: 50px; text-align: right; }}
-                    .hero-wrapper {{ height: 320px; width: 260px; }}
+                    .hero-container {{ gap: 5px; margin-top: 40px; flex-direction: column; }}
+                    .click-hint, .shop-hint {{ font-size: 0.9em; width: auto; text-align: center; }}
+                    .hero-wrapper {{ height: 320px; width: 90vw; }}
+                    .shop-grid {{ grid-template-columns: 1fr; }}
+                    .gym-grid {{ grid-template-columns: 1fr; }}
                 }}
             </style>
         </head>
@@ -259,11 +264,45 @@ def home():
                         <div class="nav-arrow next" onclick="event.stopPropagation(); changeSlide(1)">&#10095;</div>
                     </div>
                 </div>
+                <div class="shop-hint" onclick="openShop()">Our Shop! &larr;</div>
             </div>
             
             <div class="video-container">
                 <video class="video-item" autoplay muted loop playsinline><source src="{vid1_url}" type="video/mp4"></video>
                 <video class="video-item" autoplay muted loop playsinline><source src="{vid3_url}" type="video/mp4"></video>
+            </div>
+
+            <div id="shopModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeShop()">&times;</span>
+                    <h2 style="font-size: 2.5em; color: #2ecc71;">Our Shop</h2>
+                    <div class="shop-grid">
+                        <div class="shop-item">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>training plan</span>
+                        </div>
+                        <div class="shop-item">
+                            <i class="fas fa-laptop-code"></i>
+                            <span>online coaching</span>
+                        </div>
+                        <div class="shop-item">
+                            <i class="fas fa-user-check"></i>
+                            <span>1 on 1 session</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gymsModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeGyms()">&times;</span>
+                    <div class="gym-grid">
+                        <a href="https://www.isaacclimbing.com" target="_blank" class="gym-box" style="color:#ff69b4;">Issac Climbing Gym</a>
+                        <a href="https://www.thebloc.co.il/tlv" target="_blank" class="gym-box" style="color:#ffff00;">Block Climbing Gym</a>
+                        <a href="https://performancerock.co.il/branch/midtown-tlv/" target="_blank" class="gym-box" style="color:#2ecc71;">Performance Climbing Gym</a>
+                        <a href="https://vking.co.il/" target="_blank" class="gym-box" style="color:#3498db;">Viking Climbing Gym</a>
+                    </div>
+                </div>
             </div>
 
             <div id="qaSection" class="qa-section">
@@ -286,16 +325,6 @@ def home():
 
             <div id="backToTop" class="back-to-top" onclick="scrollToTop()">&#8593;</div>
 
-            <div id="gymsModal" class="modal">
-                <div class="gyms-modal-content">
-                    <span class="close-btn" onclick="closeGyms()">&times;</span>
-                    <a href="https://www.isaacclimbing.com" target="_blank" class="gym-box" style="color:#ff69b4;">Issac Climbing Gym</a>
-                    <a href="https://www.thebloc.co.il/tlv" target="_blank" class="gym-box" style="color:#ffff00;">Block Climbing Gym</a>
-                    <a href="https://performancerock.co.il/branch/midtown-tlv/" target="_blank" class="gym-box" style="color:#2ecc71;">Performance Climbing Gym</a>
-                    <a href="https://vking.co.il/" target="_blank" class="gym-box" style="color:#3498db;">Viking Climbing Gym</a>
-                </div>
-            </div>
-
             <script>
                 let currentSlide = 0;
                 const totalSlides = 3;
@@ -305,56 +334,50 @@ def home():
                     document.getElementById("hintText").style.visibility = "hidden";
                     currentSlide = 1; showSlide(1);
                 }}
-
                 function stopSlider() {{
                     document.getElementById("heroImage").style.display = "block";
                     document.getElementById("hintText").style.visibility = "visible";
                     document.querySelectorAll(".slide").forEach(s => s.style.display = "none");
                 }}
-
                 function changeSlide(n) {{
                     currentSlide += n;
                     if (currentSlide > totalSlides) currentSlide = 1;
                     if (currentSlide < 1) currentSlide = totalSlides;
                     showSlide(currentSlide);
                 }}
-
                 function showSlide(n) {{
                     document.querySelectorAll(".slide").forEach((s, idx) => {{
                         s.style.display = (idx + 1 === n) ? "flex" : "none";
                     }});
                 }}
-
-                function scrollToQA() {{
-                    document.getElementById("qaSection").scrollIntoView({{ behavior: 'smooth' }});
-                }}
-
-                function scrollToTop() {{
-                    window.scrollTo({{ top: 0, behavior: 'smooth' }});
-                }}
-
+                function scrollToQA() {{ document.getElementById("qaSection").scrollIntoView({{ behavior: 'smooth' }}); }}
+                function scrollToTop() {{ window.scrollTo({{ top: 0, behavior: 'smooth' }}); }}
                 function toggleAnswer(el) {{
                     const ans = el.nextElementSibling;
                     ans.classList.toggle("show");
                     el.querySelector("span").innerText = ans.classList.contains("show") ? "-" : "+";
                 }}
-
+                function openShop() {{ document.getElementById("shopModal").style.display = "block"; }}
+                function closeShop() {{ document.getElementById("shopModal").style.display = "none"; }}
                 function openGyms() {{ document.getElementById("gymsModal").style.display = "block"; }}
                 function closeGyms() {{ document.getElementById("gymsModal").style.display = "none"; }}
 
                 window.onscroll = function() {{
                     let btn = document.getElementById("backToTop");
-                    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {{
-                        btn.style.display = "flex";
-                    }} else {{
-                        btn.style.display = "none";
-                    }}
+                    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {{ btn.style.display = "flex"; }}
+                    else {{ btn.style.display = "none"; }}
                 }};
 
                 window.onclick = function(event) {{
-                    if (event.target.className == "modal") {{ closeGyms(); }}
+                    if (event.target.className == "modal") {{ 
+                        closeShop(); closeGyms();
+                    }}
                 }}
             </script>
         </body>
     </html>
     """
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
