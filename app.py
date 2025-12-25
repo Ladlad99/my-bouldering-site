@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Asset URLs
     image_url = url_for('static', filename='hero.jpg')
     qa_bg_url = url_for('static', filename='hero2.jpg')
     hero3_url = url_for('static', filename='hero3.jpg')
@@ -19,7 +18,6 @@ def home():
         <head>
             <title>The Bouldering Library</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <style>
                 body {{
                     font-family: 'Segoe UI', Roboto, sans-serif;
@@ -37,7 +35,7 @@ def home():
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    padding: 40px 20px 20px 20px;
+                    padding: 45px 20px 20px 20px; /* Moves title and content down */
                     max-width: 1200px;
                     margin: 0 auto;
                     position: relative;
@@ -48,7 +46,7 @@ def home():
                     display: flex; 
                     flex-direction: column; 
                     gap: 12px; 
-                    top: 45px;
+                    top: 55px; /* Moves buttons slightly down */
                 }}
                 .main-title {{ 
                     font-size: 2.5em; 
@@ -57,13 +55,10 @@ def home():
                     text-transform: uppercase;
                 }}
 
-                .qa-btn {{ background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; transition: 0.3s; }}
-                .gyms-btn {{ background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; transition: 0.3s; }}
-                .shop-btn {{ background: #2ecc71; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; transition: 0.3s; }}
-                
-                .nav-buttons button:hover {{ transform: translateY(-2px); opacity: 0.9; }}
+                .qa-btn {{ background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
+                .gyms-btn {{ background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
 
-                /* --- Hero Section --- */
+                /* --- Hero Section Symmetry Fix --- */
                 .hero-container {{
                     position: relative;
                     margin: 20px auto;
@@ -71,6 +66,7 @@ def home():
                     justify-content: center;
                     align-items: center;
                     gap: 20px;
+                    /* Shifted to compensate for the hint text on the left */
                     transform: translateX(-35px); 
                 }}
 
@@ -139,59 +135,12 @@ def home():
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    font-size: 20px;
                 }}
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Shop Modal Style --- */
-                .shop-modal-content {{
-                    background: #1c2630;
-                    margin: 10vh auto;
-                    padding: 50px;
-                    border: 2px solid #2ecc71;
-                    border-radius: 30px;
-                    width: 80%;
-                    max-width: 900px;
-                    position: relative;
-                    box-shadow: 0 0 30px rgba(46, 204, 113, 0.2);
-                }}
-
-                .shop-grid {{
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 30px;
-                    margin-top: 40px;
-                }}
-
-                .shop-item {{
-                    background: rgba(255,255,255,0.05);
-                    padding: 30px 10px;
-                    border-radius: 20px;
-                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                    cursor: pointer;
-                    border: 1px solid rgba(255,255,255,0.1);
-                }}
-
-                .shop-item:hover {{
-                    transform: scale(1.15);
-                    background: rgba(255,255,255,0.1);
-                    border-color: #2ecc71;
-                    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-                }}
-
-                .shop-item i {{
-                    font-size: 3.5em;
-                    color: #2ecc71;
-                    margin-bottom: 15px;
-                }}
-
-                .shop-item h3 {{
-                    font-size: 1.2em;
-                    margin-top: 10px;
-                    text-transform: capitalize;
-                }}
-
-                /* --- Back to Top --- */
+                /* --- Sleek Black Back to Top --- */
                 .back-to-top {{
                     position: fixed;
                     bottom: 30px;
@@ -211,27 +160,69 @@ def home():
                     border: 1px solid rgba(255,255,255,0.2);
                 }}
 
+                /* --- Video Container --- */
+                .video-container {{
+                    display: flex;
+                    justify-content: center;
+                    gap: 30px;
+                    padding: 40px 20px;
+                    transform: translateX(0); /* Reset centering */
+                }}
+                .video-item {{ width: 25%; max-height: 200px; object-fit: cover; border-radius: 16px; border: 1px solid white; }}
+
+                /* --- QA Section (Bottom) --- */
+                .qa-section {{
+                    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{qa_bg_url}');
+                    background-size: cover;
+                    background-position: center;
+                    background-attachment: fixed;
+                    padding: 60px 20px;
+                    margin-top: 50px;
+                    border-top: 2px solid #3498db;
+                }}
+                .qa-content {{ max-width: 800px; margin: 0 auto; }}
+                .qa-row {{ margin-bottom: 15px; text-align: left; }}
+                .qa-question {{
+                    padding: 20px;
+                    background: rgba(255,255,255,0.1);
+                    backdrop-filter: blur(5px);
+                    border-radius: 12px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    display: flex;
+                    justify-content: space-between;
+                    border: 1px solid rgba(255,255,255,0.1);
+                    font-size: 1.2em;
+                }}
+                .qa-answer {{
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: all 0.4s ease;
+                    padding: 0 20px;
+                    color: #3498db;
+                    font-size: 1.1em;
+                    background: rgba(0,0,0,0.3);
+                    border-radius: 0 0 12px 12px;
+                }}
+                .qa-answer.show {{ max-height: 200px; padding: 15px 20px; border: 1px solid rgba(52, 152, 219, 0.3); border-top: none; }}
+
                 /* --- Gym Modal --- */
                 .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }}
+                .gyms-modal-content {{ 
+                    background: #1e2a38; margin: 10vh auto; padding: 60px 20px 20px; 
+                    border: 2px solid white; border-radius: 24px; width: 80%; height: 70vh;
+                    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; position: relative;
+                }}
                 .close-btn {{ position: absolute; top: 15px; right: 25px; font-size: 35px; cursor: pointer; }}
+                .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.6em; font-weight: bold; text-decoration: none; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.4); padding: 15px; text-align: center; }}
 
                 /* --- Mobile --- */
                 @media (max-width: 768px) {{
-                    .header-container {{ padding-top: 160px; }}
-                    .nav-buttons {{ 
-                        position: absolute; 
-                        top: 20px; 
-                        left: 50%; 
-                        transform: translateX(-50%); 
-                        flex-direction: row; 
-                        flex-wrap: wrap;
-                        justify-content: center;
-                        width: 100%;
-                    }}
-                    .hero-container {{ gap: 5px; margin-top: 20px; transform: translateX(0); }}
+                    .header-container {{ padding-top: 110px; }}
+                    .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; }}
+                    .hero-container {{ gap: 5px; margin-top: 40px; transform: translateX(0); }}
+                    .click-hint {{ font-size: 0.7em; width: 50px; text-align: right; }}
                     .hero-wrapper {{ height: 320px; width: 260px; }}
-                    .shop-grid {{ grid-template-columns: 1fr; }}
-                    .shop-modal-content {{ width: 90%; height: 80vh; overflow-y: auto; }}
                 }}
             </style>
         </head>
@@ -241,7 +232,6 @@ def home():
                 <div class="nav-buttons">
                     <button class="qa-btn" onclick="scrollToQA()">QA ❓</button>
                     <button class="gyms-btn" onclick="openGyms()">Gyms In TLV</button>
-                    <button class="shop-btn" onclick="openShop()">OUR SHOP! 🛒</button>
                 </div>
                 <div class="main-title">The Bouldering Library</div>
             </div>
@@ -276,28 +266,6 @@ def home():
                 <video class="video-item" autoplay muted loop playsinline><source src="{vid3_url}" type="video/mp4"></video>
             </div>
 
-            <div id="shopModal" class="modal">
-                <div class="shop-modal-content">
-                    <span class="close-btn" onclick="closeShop()">&times;</span>
-                    <h2 style="font-size: 2.5em; color: #2ecc71;">OUR SHOP</h2>
-                    <p>Elevate your climbing game with our expert services.</p>
-                    <div class="shop-grid">
-                        <div class="shop-item">
-                            <i class="fas fa-clipboard-list"></i>
-                            <h3>training plan</h3>
-                        </div>
-                        <div class="shop-item">
-                            <i class="fas fa-video"></i>
-                            <h3>online coaching</h3>
-                        </div>
-                        <div class="shop-item">
-                            <i class="fas fa-user-friends"></i>
-                            <h3>1 on 1 session</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div id="qaSection" class="qa-section">
                 <div class="qa-content">
                     <h2 style="font-size: 2.5em; margin-bottom: 40px; color: #3498db;">Common Questions</h2>
@@ -319,7 +287,7 @@ def home():
             <div id="backToTop" class="back-to-top" onclick="scrollToTop()">&#8593;</div>
 
             <div id="gymsModal" class="modal">
-                <div class="gyms-modal-content" style="background: #1e2a38; margin: 10vh auto; padding: 60px 20px 20px; border: 2px solid white; border-radius: 24px; width: 80%; height: 70vh; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; position: relative;">
+                <div class="gyms-modal-content">
                     <span class="close-btn" onclick="closeGyms()">&times;</span>
                     <a href="https://www.isaacclimbing.com" target="_blank" class="gym-box" style="color:#ff69b4;">Issac Climbing Gym</a>
                     <a href="https://www.thebloc.co.il/tlv" target="_blank" class="gym-box" style="color:#ffff00;">Block Climbing Gym</a>
@@ -357,12 +325,13 @@ def home():
                     }});
                 }}
 
-                function openShop() {{ document.getElementById("shopModal").style.display = "block"; }}
-                function closeShop() {{ document.getElementById("shopModal").style.display = "none"; }}
-                function openGyms() {{ document.getElementById("gymsModal").style.display = "block"; }}
-                function closeGyms() {{ document.getElementById("gymsModal").style.display = "none"; }}
-                function scrollToQA() {{ document.getElementById("qaSection").scrollIntoView({{ behavior: 'smooth' }}); }}
-                function scrollToTop() {{ window.scrollTo({{ top: 0, behavior: 'smooth' }}); }}
+                function scrollToQA() {{
+                    document.getElementById("qaSection").scrollIntoView({{ behavior: 'smooth' }});
+                }}
+
+                function scrollToTop() {{
+                    window.scrollTo({{ top: 0, behavior: 'smooth' }});
+                }}
 
                 function toggleAnswer(el) {{
                     const ans = el.nextElementSibling;
@@ -370,23 +339,22 @@ def home():
                     el.querySelector("span").innerText = ans.classList.contains("show") ? "-" : "+";
                 }}
 
+                function openGyms() {{ document.getElementById("gymsModal").style.display = "block"; }}
+                function closeGyms() {{ document.getElementById("gymsModal").style.display = "none"; }}
+
                 window.onscroll = function() {{
                     let btn = document.getElementById("backToTop");
-                    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {{ btn.style.display = "flex"; }}
-                    else {{ btn.style.display = "none"; }}
+                    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {{
+                        btn.style.display = "flex";
+                    }} else {{
+                        btn.style.display = "none";
+                    }}
                 }};
 
                 window.onclick = function(event) {{
-                    if (event.target.className == "modal") {{ 
-                        document.getElementById("gymsModal").style.display = "none";
-                        document.getElementById("shopModal").style.display = "none";
-                    }}
+                    if (event.target.className == "modal") {{ closeGyms(); }}
                 }}
             </script>
         </body>
     </html>
     """
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
