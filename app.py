@@ -49,8 +49,9 @@ def home():
                     left: 20px; 
                     display: flex; 
                     flex-direction: column; 
-                    gap: 15px; 
+                    gap: 20px; /* More space between text buttons */
                     top: 55px;
+                    align-items: flex-start; /* Align text to the left */
                 }}
                 .main-title {{ 
                     font-size: 2.5em; 
@@ -59,26 +60,35 @@ def home():
                     text-transform: uppercase;
                 }}
 
-                /* --- Natural "Stone" Look Buttons --- */
-                .btn-natural {{
-                    background: rgba(255, 255, 255, 0.1);
-                    backdrop-filter: blur(5px);
-                    color: #ecf0f1;
-                    padding: 12px;
-                    border: 1px solid rgba(255, 255, 255, 0.4);
-                    border-radius: 8px;
+                /* --- Clean White Text Buttons --- */
+                .btn-text-only {{
+                    background: none;
+                    border: none;
+                    color: white;
+                    padding: 5px 0;
                     cursor: pointer;
-                    font-weight: 600;
-                    width: 150px;
-                    transition: all 0.3s ease;
-                    text-transform: uppercase;
-                    font-size: 0.9em;
+                    font-weight: 700;
+                    font-size: 1.1em;
                     letter-spacing: 1px;
+                    text-transform: uppercase;
+                    transition: all 0.3s ease;
+                    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+                    position: relative;
                 }}
-                .btn-natural:hover {{
-                    background: rgba(255, 255, 255, 0.25);
-                    border-color: #fff;
-                    transform: translateY(-2px);
+                
+                /* Elegant underline on hover */
+                .btn-text-only::after {{
+                    content: '';
+                    position: absolute;
+                    width: 0;
+                    height: 2px;
+                    bottom: 0;
+                    left: 0;
+                    background-color: white;
+                    transition: width 0.3s ease;
+                }}
+                .btn-text-only:hover::after {{
+                    width: 100%;
                 }}
 
                 /* --- Hero Section --- */
@@ -181,67 +191,68 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Shop Modal Style (Brighter & Smaller) --- */
+                /* --- Full Frame Shop Modal Style --- */
                 .shop-modal-content {{
-                    /* Brighter overlay (0.2 instead of 0.6) so image shows through */
-                    background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('{hero5_url}');
+                    /* Darker overlay for better text contrast against full bg */
+                    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{hero5_url}');
                     background-size: cover;
                     background-position: center;
-                    margin: 15vh auto;
-                    padding: 40px;
-                    border: 1px solid rgba(255,255,255,0.4);
-                    border-radius: 30px;
-                    width: 70%;
-                    max-width: 800px;
-                    position: relative;
-                    box-shadow: 0 0 50px rgba(0,0,0,0.3);
-                    text-align: center;
+                    /* Full screen settings */
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                    border: none;
+                    border-radius: 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
                 }}
 
                 .shop-grid {{
                     display: flex;
                     justify-content: center;
-                    gap: 30px;
-                    margin-top: 20px; /* Less margin since title is gone */
+                    gap: 60px; /* Wider gap for cleaner look */
                     flex-wrap: wrap;
                 }}
                 
                 .shop-item {{
-                    /* Brighter/Whiter background for glass effect */
-                    background: rgba(255, 255, 255, 0.15); 
-                    backdrop-filter: blur(4px);
+                    /* Removed squares/backgrounds */
+                    background: none;
+                    border: none;
+                    backdrop-filter: none;
                     padding: 20px;
-                    width: 160px; /* Smaller fixed width */
-                    height: 160px; /* Square shape */
-                    border-radius: 20px;
-                    transition: all 0.3s ease;
+                    transition: transform 0.3s ease;
                     cursor: pointer;
-                    border: 1px solid rgba(255,255,255,0.3);
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    justify-content: center;
                 }}
 
                 .shop-item:hover {{
-                    transform: translateY(-5px) scale(1.05);
-                    background: rgba(255,255,255,0.3); /* Even brighter on hover */
-                    border-color: #ffffff;
+                    transform: scale(1.2);
+                    background: none;
+                    border: none;
+                    box-shadow: none;
                 }}
 
                 .emoji-icon {{
-                    font-size: 3.5em; /* Smaller icons */
-                    margin-bottom: 10px;
+                    font-size: 6em; /* Larger emojis */
+                    margin-bottom: 20px;
                     display: block;
-                    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+                    /* Strong drop shadow so they pop off the background background */
+                    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
                 }}
                 
                 .shop-item span {{ 
-                    font-weight: 600; 
-                    font-size: 1em; /* Smaller text */
+                    font-weight: 800; 
+                    font-size: 1.8em; /* Larger text */
                     text-transform: capitalize;
+                    letter-spacing: 1px;
                     color: #fff;
-                    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+                    /* Strong text shadow for readability */
+                    text-shadow: 0 3px 10px rgba(0,0,0,1);
                 }}
 
                 /* --- Video Container --- */
@@ -274,7 +285,7 @@ def home():
                     border: 2px solid white; border-radius: 24px; width: 80%; height: 70vh;
                     position: relative; overflow-y: auto;
                 }}
-                .close-btn {{ position: absolute; top: 15px; right: 25px; font-size: 35px; cursor: pointer; color: white; z-index: 10; }}
+                .close-btn {{ position: absolute; top: 30px; right: 30px; font-size: 40px; cursor: pointer; color: white; z-index: 10; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }}
                 .gym-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%; }}
                 .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.6em; font-weight: bold; text-decoration: none; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.4); padding: 15px; text-align: center; }}
 
@@ -286,14 +297,14 @@ def home():
 
                 @media (max-width: 768px) {{
                     .header-container {{ padding-top: 110px; }}
-                    .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; }}
+                    .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; align-items: center; }}
                     .hero-container {{ width: 100%; margin-top: 50px; flex-direction: column; }}
                     .click-hint {{ position: relative; left: auto; top: auto; transform: none; margin-bottom: 10px; animation: none; }}
                     .shop-hint-chalk {{ position: relative; top: auto; right: auto; margin-top: 10px; transform: rotate(-3deg); }}
                     .hero-wrapper {{ height: 320px; width: 90vw; }}
-                    .shop-modal-content {{ width: 90%; padding: 40px 20px; }}
-                    .shop-grid {{ justify-content: center; }}
+                    .shop-grid {{ flex-direction: column; gap: 40px; }}
                     .gym-grid {{ grid-template-columns: 1fr; }}
+                    .emoji-icon {{ font-size: 5em; }}
                 }}
             </style>
         </head>
@@ -301,8 +312,8 @@ def home():
             <div id="top"></div>
             <div class="header-container">
                 <div class="nav-buttons">
-                    <button class="btn-natural" onclick="scrollToQA()">QA ❓</button>
-                    <button class="btn-natural" onclick="openGyms()">Gyms In TLV</button>
+                    <button class="btn-text-only" onclick="scrollToQA()">QA ❓</button>
+                    <button class="btn-text-only" onclick="openGyms()">Gyms In TLV</button>
                 </div>
                 <div class="main-title">The Bouldering Library</div>
             </div>
