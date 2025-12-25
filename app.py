@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Asset URLs
     image_url = url_for('static', filename='hero.jpg')
     qa_bg_url = url_for('static', filename='hero2.jpg')
     hero3_url = url_for('static', filename='hero3.jpg')
@@ -32,6 +31,18 @@ def home():
                     min-height: 100vh;
                     scroll-behavior: smooth;
                     overflow-x: hidden;
+                }}
+
+                /* --- Animations --- */
+                @keyframes modalFadeIn {{
+                    from {{ opacity: 0; }}
+                    to {{ opacity: 1; }}
+                }}
+
+                @keyframes modalPopUp {{
+                    0% {{ transform: scale(0.5); opacity: 0; }}
+                    80% {{ transform: scale(1.05); opacity: 1; }}
+                    100% {{ transform: scale(1); opacity: 1; }}
                 }}
 
                 /* --- Header --- */
@@ -151,26 +162,27 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Shop Tab Modal (Bottom Aligned) --- */
+                /* --- Shop Tab Modal (Bottom Aligned + Animation) --- */
                 .shop-modal-content {{
                     background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('{hero5_url}');
                     background-size: cover;
                     background-position: center;
                     margin: 15vh auto;
-                    /* Padding pushed to bottom to hold buttons */
                     padding: 40px 20px 80px 20px; 
                     border: 1px solid rgba(255,255,255,0.4);
                     border-radius: 20px;
                     width: 500px;
                     max-width: 90%;
-                    min-height: 400px; /* Taller to show BG */
+                    min-height: 400px;
                     position: relative;
                     box-shadow: 0 0 40px rgba(0,0,0,0.5);
                     text-align: center;
                     display: flex;
                     flex-direction: column;
-                    justify-content: flex-end; /* Pushes content to bottom */
-                    cursor: pointer; /* Indicates clickable background */
+                    justify-content: flex-end;
+                    cursor: pointer;
+                    /* Added Pop Up Animation */
+                    animation: modalPopUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 }}
 
                 .shop-grid {{
@@ -178,7 +190,7 @@ def home():
                     justify-content: center;
                     gap: 20px;
                     flex-wrap: wrap;
-                    margin-bottom: 20px; /* Space above contact button */
+                    margin-bottom: 20px;
                 }}
                 
                 .shop-item {{
@@ -186,52 +198,31 @@ def home():
                     transition: transform 0.3s ease; cursor: pointer;
                     display: flex; flex-direction: column; align-items: center;
                 }}
-
                 .shop-item:hover {{ transform: scale(1.1); }}
 
                 .emoji-icon {{
                     font-size: 4em; margin-bottom: 10px; display: block;
                     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
                 }}
-                
                 .shop-item span {{ 
                     font-weight: 700; font-size: 1.1em; text-transform: capitalize; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.8);
                 }}
 
-                /* --- Contact Us Section (Bottom Left) --- */
+                /* --- Contact Us Section --- */
                 .contact-container {{
-                    position: absolute;
-                    bottom: 20px;
-                    left: 20px;
-                    text-align: left;
-                    cursor: default; /* Prevents background click logic on container area */
+                    position: absolute; bottom: 20px; left: 20px; text-align: left; cursor: default;
                 }}
-                
                 .contact-btn {{
-                    font-size: 0.9em;
-                    font-weight: bold;
-                    color: white;
-                    cursor: pointer;
-                    text-decoration: underline;
-                    opacity: 0.9;
-                    transition: 0.3s;
-                    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+                    font-size: 0.9em; font-weight: bold; color: white; cursor: pointer; text-decoration: underline; opacity: 0.9; transition: 0.3s; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
                 }}
                 .contact-btn:hover {{ opacity: 1; color: #3498db; }}
 
                 .contact-form {{
-                    display: none;
-                    margin-top: 5px;
-                    background: rgba(0,0,0,0.6);
-                    padding: 10px;
-                    border-radius: 8px;
-                    width: 200px;
+                    display: none; margin-top: 5px; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 8px; width: 200px;
                 }}
-
                 .contact-input {{
                     width: 100%; padding: 5px; margin-bottom: 5px; border-radius: 4px; border: none; font-family: inherit; font-size: 0.8em;
                 }}
-
                 .send-btn-link {{
                     display: inline-block; background-color: #3498db; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8em; font-weight: bold;
                 }}
@@ -261,7 +252,11 @@ def home():
                 .qa-answer.show {{ max-height: 200px; padding: 15px 20px; border: 1px solid rgba(52, 152, 219, 0.3); border-top: none; }}
 
                 /* --- Generic Modal --- */
-                .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }}
+                .modal {{ 
+                    display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; 
+                    background: rgba(0,0,0,0.8);
+                    animation: modalFadeIn 0.3s ease-out; /* Fade background */
+                }}
                 .modal-content-gym {{ 
                     background: #1e2a38; margin: 10vh auto; padding: 60px 20px 20px; 
                     border: 2px solid white; border-radius: 24px; width: 80%; height: 70vh;
@@ -333,6 +328,7 @@ def home():
 
             <div id="shopModal" class="modal">
                 <div class="shop-modal-content" onclick="closeShop()">
+                    
                     <div class="shop-grid" onclick="event.stopPropagation()">
                         <div class="shop-item">
                             <span class="emoji-icon">📝</span>
@@ -446,7 +442,8 @@ def home():
 
                 window.onclick = function(event) {{
                     if (event.target.className == "modal") {{ 
-                        closeShop(); closeGyms();
+                        if (event.target.id === "gymsModal") closeGyms();
+                        if (event.target.id === "shopModal") closeShop();
                     }}
                 }}
             </script>
