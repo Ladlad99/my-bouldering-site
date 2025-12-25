@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
+    # Asset URLs
     image_url = url_for('static', filename='hero.jpg')
     qa_bg_url = url_for('static', filename='hero2.jpg')
     hero3_url = url_for('static', filename='hero3.jpg')
@@ -19,6 +20,7 @@ def home():
             <title>The Bouldering Library</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+            <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
             <style>
                 body {{
                     font-family: 'Segoe UI', Roboto, sans-serif;
@@ -59,7 +61,7 @@ def home():
                 .qa-btn {{ background: #3498db; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
                 .gyms-btn {{ background: #9b59b6; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 140px; }}
 
-                /* --- Hero Section & Shop Hint --- */
+                /* --- Hero Section --- */
                 .hero-container {{
                     position: relative;
                     margin: 20px auto;
@@ -67,8 +69,6 @@ def home():
                     justify-content: center;
                     align-items: center;
                     gap: 20px;
-                    /* Keeps image centered under title */
-                    transform: translateX(0); 
                 }}
 
                 .click-hint {{
@@ -76,20 +76,27 @@ def home():
                     font-weight: bold;
                     font-size: 1em;
                     animation: floatHint 2s infinite ease-in-out;
-                    cursor: default;
                 }}
 
-                .shop-hint {{
-                    color: #2ecc71; /* Green for shop */
-                    font-weight: bold;
-                    font-size: 1em;
-                    animation: floatShop 2s infinite ease-in-out;
+                /* --- Chalkboard Shop Style (Slant & Upper Right) --- */
+                .shop-hint-chalk {{
+                    position: absolute;
+                    top: -40px;
+                    right: 20px;
+                    font-family: 'Architects Daughter', cursive;
+                    font-size: 1.8em;
+                    color: #fdfdfd;
+                    transform: rotate(-8deg); /* Slant */
                     cursor: pointer;
-                    text-decoration: underline;
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                    transition: 0.3s;
+                }}
+                .shop-hint-chalk:hover {{
+                    transform: rotate(-5deg) scale(1.1);
+                    color: #3498db;
                 }}
 
                 @keyframes floatHint {{ 0%, 100% {{ transform: translateX(0); }} 50% {{ transform: translateX(-10px); }} }}
-                @keyframes floatShop {{ 0%, 100% {{ transform: translateX(0); }} 50% {{ transform: translateX(10px); }} }}
 
                 .hero-wrapper {{
                     width: 550px;
@@ -129,22 +136,6 @@ def home():
                     margin-bottom: 10px;
                 }}
 
-                /* --- Shop Modal Icons --- */
-                .shop-grid {{
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 20px;
-                    margin-top: 30px;
-                }}
-                .shop-item {{
-                    transition: transform 0.3s ease;
-                    cursor: pointer;
-                    padding: 20px;
-                }}
-                .shop-item:hover {{ transform: scale(1.2); }}
-                .shop-item i {{ font-size: 3em; color: #2ecc71; margin-bottom: 10px; display: block; }}
-                .shop-item span {{ font-weight: bold; font-size: 1.1em; color: white; }}
-
                 .nav-arrow {{
                     position: absolute;
                     top: 50%;
@@ -165,25 +156,28 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Back to Top --- */
-                .back-to-top {{
-                    position: fixed;
-                    bottom: 30px;
-                    right: 30px;
-                    background-color: #000000;
-                    color: white;
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    display: none; 
-                    justify-content: center;
-                    align-items: center;
-                    cursor: pointer;
-                    z-index: 1000;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-                    font-size: 24px;
-                    border: 1px solid rgba(255,255,255,0.2);
+                /* --- Shop Modal Style --- */
+                .shop-grid {{
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 30px;
+                    margin-top: 40px;
                 }}
+                .shop-item {{
+                    background: rgba(255,255,255,0.05);
+                    padding: 30px 10px;
+                    border-radius: 20px;
+                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    cursor: pointer;
+                    border: 1px solid rgba(255,255,255,0.1);
+                }}
+                .shop-item:hover {{
+                    transform: scale(1.15);
+                    background: rgba(255,255,255,0.1);
+                    border-color: #3498db;
+                }}
+                .shop-item i {{ font-size: 3.5em; color: #3498db; margin-bottom: 15px; display: block; }}
+                .shop-item span {{ font-weight: bold; font-size: 1.2em; }}
 
                 /* --- Video Container --- */
                 .video-container {{ display: flex; justify-content: center; gap: 30px; padding: 40px 20px; }}
@@ -219,12 +213,32 @@ def home():
                 .gym-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%; }}
                 .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.6em; font-weight: bold; text-decoration: none; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.4); padding: 15px; text-align: center; }}
 
+                /* --- Back to Top (Black Circle) --- */
+                .back-to-top {{
+                    position: fixed;
+                    bottom: 30px;
+                    right: 30px;
+                    background-color: #000000;
+                    color: white;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    display: none; 
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    z-index: 1000;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+                    font-size: 24px;
+                    border: 1px solid rgba(255,255,255,0.2);
+                }}
+
                 /* --- Mobile --- */
                 @media (max-width: 768px) {{
                     .header-container {{ padding-top: 110px; }}
                     .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; }}
-                    .hero-container {{ gap: 5px; margin-top: 40px; flex-direction: column; }}
-                    .click-hint, .shop-hint {{ font-size: 0.9em; width: auto; text-align: center; }}
+                    .hero-container {{ gap: 5px; margin-top: 60px; flex-direction: column; }}
+                    .shop-hint-chalk {{ position: relative; top: 0; right: 0; transform: rotate(-3deg); margin-top: 10px; }}
                     .hero-wrapper {{ height: 320px; width: 90vw; }}
                     .shop-grid {{ grid-template-columns: 1fr; }}
                     .gym-grid {{ grid-template-columns: 1fr; }}
@@ -242,7 +256,7 @@ def home():
             </div>
 
             <div class="hero-container">
-                <div class="click-hint" id="hintText">lets get started! &rarr;</div>
+                <div class="click-hint">lets get started! &rarr;</div>
                 <div class="hero-wrapper">
                     <img src="{image_url}" id="heroImage" class="main-img" onclick="startSlider()">
                     
@@ -264,7 +278,7 @@ def home():
                         <div class="nav-arrow next" onclick="event.stopPropagation(); changeSlide(1)">&#10095;</div>
                     </div>
                 </div>
-                <div class="shop-hint" onclick="openShop()">Our Shop! &larr;</div>
+                <div class="shop-hint-chalk" onclick="openShop()">Our Shop!</div>
             </div>
             
             <div class="video-container">
@@ -275,7 +289,7 @@ def home():
             <div id="shopModal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn" onclick="closeShop()">&times;</span>
-                    <h2 style="font-size: 2.5em; color: #2ecc71;">Our Shop</h2>
+                    <h2 style="font-size: 2.5em; color: #3498db;">Our Shop</h2>
                     <div class="shop-grid">
                         <div class="shop-item">
                             <i class="fas fa-clipboard-list"></i>
@@ -331,12 +345,10 @@ def home():
 
                 function startSlider() {{
                     document.getElementById("heroImage").style.display = "none";
-                    document.getElementById("hintText").style.visibility = "hidden";
                     currentSlide = 1; showSlide(1);
                 }}
                 function stopSlider() {{
                     document.getElementById("heroImage").style.display = "block";
-                    document.getElementById("hintText").style.visibility = "visible";
                     document.querySelectorAll(".slide").forEach(s => s.style.display = "none");
                 }}
                 function changeSlide(n) {{
