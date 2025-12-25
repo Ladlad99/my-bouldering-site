@@ -151,24 +151,26 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Smaller Shop Tab Modal --- */
+                /* --- Shop Tab Modal (Bottom Aligned) --- */
                 .shop-modal-content {{
-                    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{hero5_url}');
+                    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('{hero5_url}');
                     background-size: cover;
                     background-position: center;
                     margin: 15vh auto;
-                    padding: 40px 20px 60px 20px; /* Extra bottom padding for contact */
+                    /* Padding pushed to bottom to hold buttons */
+                    padding: 40px 20px 80px 20px; 
                     border: 1px solid rgba(255,255,255,0.4);
                     border-radius: 20px;
-                    width: 500px; /* Smaller Fixed Width */
+                    width: 500px;
                     max-width: 90%;
-                    min-height: 350px;
+                    min-height: 400px; /* Taller to show BG */
                     position: relative;
                     box-shadow: 0 0 40px rgba(0,0,0,0.5);
                     text-align: center;
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
+                    justify-content: flex-end; /* Pushes content to bottom */
+                    cursor: pointer; /* Indicates clickable background */
                 }}
 
                 .shop-grid {{
@@ -176,6 +178,7 @@ def home():
                     justify-content: center;
                     gap: 20px;
                     flex-wrap: wrap;
+                    margin-bottom: 20px; /* Space above contact button */
                 }}
                 
                 .shop-item {{
@@ -201,6 +204,7 @@ def home():
                     bottom: 20px;
                     left: 20px;
                     text-align: left;
+                    cursor: default; /* Prevents background click logic on container area */
                 }}
                 
                 .contact-btn {{
@@ -209,13 +213,14 @@ def home():
                     color: white;
                     cursor: pointer;
                     text-decoration: underline;
-                    opacity: 0.8;
+                    opacity: 0.9;
                     transition: 0.3s;
+                    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
                 }}
                 .contact-btn:hover {{ opacity: 1; color: #3498db; }}
 
                 .contact-form {{
-                    display: none; /* Hidden by default */
+                    display: none;
                     margin-top: 5px;
                     background: rgba(0,0,0,0.6);
                     padding: 10px;
@@ -224,24 +229,11 @@ def home():
                 }}
 
                 .contact-input {{
-                    width: 100%;
-                    padding: 5px;
-                    margin-bottom: 5px;
-                    border-radius: 4px;
-                    border: none;
-                    font-family: inherit;
-                    font-size: 0.8em;
+                    width: 100%; padding: 5px; margin-bottom: 5px; border-radius: 4px; border: none; font-family: inherit; font-size: 0.8em;
                 }}
 
                 .send-btn-link {{
-                    display: inline-block;
-                    background-color: #3498db;
-                    color: white;
-                    padding: 4px 10px;
-                    border-radius: 4px;
-                    text-decoration: none;
-                    font-size: 0.8em;
-                    font-weight: bold;
+                    display: inline-block; background-color: #3498db; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8em; font-weight: bold;
                 }}
                 .send-btn-link:hover {{ background-color: #2980b9; }}
 
@@ -292,7 +284,7 @@ def home():
                     .click-hint {{ position: relative; left: auto; top: auto; transform: none; margin-bottom: 10px; animation: none; }}
                     .shop-hint-chalk {{ position: relative; top: auto; right: auto; margin-top: 10px; transform: rotate(-3deg); }}
                     .hero-wrapper {{ height: 320px; width: 90vw; }}
-                    .shop-modal-content {{ width: 85%; padding: 40px 10px; }}
+                    .shop-modal-content {{ width: 85%; padding: 40px 10px 80px 10px; }}
                     .shop-grid {{ gap: 15px; }}
                     .gym-grid {{ grid-template-columns: 1fr; }}
                 }}
@@ -340,10 +332,8 @@ def home():
             </div>
 
             <div id="shopModal" class="modal">
-                <div class="shop-modal-content">
-                    <span class="close-btn" onclick="closeShop()">&times;</span>
-                    
-                    <div class="shop-grid">
+                <div class="shop-modal-content" onclick="closeShop()">
+                    <div class="shop-grid" onclick="event.stopPropagation()">
                         <div class="shop-item">
                             <span class="emoji-icon">📝</span>
                             <span>Training Plan</span>
@@ -358,7 +348,7 @@ def home():
                         </div>
                     </div>
 
-                    <div class="contact-container">
+                    <div class="contact-container" onclick="event.stopPropagation()">
                         <div class="contact-btn" onclick="toggleContact()">Contact Us</div>
                         <div id="contactForm" class="contact-form">
                             <input type="text" id="contactMsg" class="contact-input" placeholder="Your phrase..." onkeyup="updateMailLink()">
