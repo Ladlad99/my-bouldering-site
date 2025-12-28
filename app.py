@@ -18,13 +18,14 @@ def home():
     return f"""
     <html>
         <head>
-            <title>The Bouldering Library</title>
+            <title>The Bouldering Coach</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
             <style>
                 body {{
                     font-family: 'Segoe UI', Roboto, sans-serif;
-                    background: linear-gradient(135deg, #1e2a38 0%, #2c3e50 100%);
+                    /* CHANGED: Darker, moodier background like Adam Ondra's site */
+                    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
                     color: white;
                     text-align: center;
                     padding: 0;
@@ -45,7 +46,7 @@ def home():
                     position: relative;
                 }}
                 
-                /* Left Buttons (Only QA remains) */
+                /* Left Buttons */
                 .nav-buttons {{ 
                     position: absolute; 
                     left: 20px; 
@@ -57,13 +58,16 @@ def home():
                 }}
 
                 .main-title {{ 
-                    font-size: 2.5em; 
+                    font-family: 'Architects Daughter', cursive;
+                    font-size: 3em; 
                     font-weight: 800; 
-                    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-                    text-transform: uppercase;
+                    /* CHANGED: Stronger shadow for the pro look */
+                    text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+                    color: #fff;
+                    letter-spacing: 1px;
                 }}
 
-                /* --- Top Right Menu (Chalkboard Style - No Slant) --- */
+                /* --- Top Right Menu (Refined) --- */
                 .menu-container {{
                     position: absolute;
                     right: 30px;
@@ -76,7 +80,6 @@ def home():
                     font-family: 'Architects Daughter', cursive;
                     font-size: 1.8em;
                     color: #fdfdfd;
-                    /* transform: rotate(5deg); REMOVED SLANT */
                     cursor: pointer;
                     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
                     transition: 0.3s;
@@ -86,69 +89,77 @@ def home():
                 
                 .menu-label:hover {{
                     color: #3498db;
-                    transform: scale(1.1); /* Simple scale instead of rotate */
+                    transform: scale(1.1);
                 }}
 
-                /* The Fade-in List */
+                /* --- Menu Dropdown --- */
                 .menu-dropdown {{
                     visibility: hidden;
                     opacity: 0;
                     position: absolute;
                     right: 0;
                     top: 50px;
-                    background: rgba(0, 0, 0, 0.8);
-                    border: 1px solid rgba(255,255,255,0.2);
-                    border-radius: 12px;
-                    padding: 15px;
-                    width: 220px;
+                    background: rgba(10, 10, 10, 0.95); /* Darker background */
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 4px; /* Sharper corners for pro feel */
+                    padding: 10px 0;
+                    width: 240px;
                     display: flex;
                     flex-direction: column;
-                    gap: 10px;
-                    transition: opacity 0.4s ease, visibility 0.4s ease;
-                    backdrop-filter: blur(5px);
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+                    transition: all 0.3s ease;
+                    transform: translateY(-10px);
                 }}
 
                 .menu-container:hover .menu-dropdown {{
                     visibility: visible;
                     opacity: 1;
+                    transform: translateY(0);
                 }}
 
                 .menu-item {{
-                    color: white;
+                    color: rgba(255,255,255,0.8);
                     text-decoration: none;
-                    font-weight: bold;
+                    font-weight: 500;
                     font-size: 1.1em;
-                    padding: 8px 12px;
-                    border-radius: 6px;
+                    padding: 15px 20px;
+                    border-bottom: 1px solid rgba(255,255,255,0.05);
                     transition: 0.3s;
                     cursor: pointer;
-                    text-align: center;
+                    text-align: right;
+                    display: block;
+                    letter-spacing: 1px;
                 }}
                 
+                .menu-item:last-child {{ border-bottom: none; }}
+
                 .menu-item:hover {{
-                    background: rgba(255, 255, 255, 0.2);
-                    color: #3498db;
+                    background: rgba(255, 255, 255, 0.05);
+                    color: #fff;
+                    padding-right: 25px;
                 }}
 
                 /* --- Text Only Buttons --- */
                 .btn-text-only {{
                     background: none;
                     border: none;
-                    color: white;
+                    color: rgba(255,255,255,0.9);
                     padding: 5px 0;
                     cursor: pointer;
-                    font-weight: 700;
-                    font-size: 1.1em;
-                    letter-spacing: 1px;
+                    font-weight: 600;
+                    font-size: 1em;
+                    letter-spacing: 2px; /* Wider spacing for cinematic look */
                     text-transform: uppercase;
                     transition: all 0.3s ease;
-                    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+                    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
                     position: relative;
                 }}
                 .btn-text-only::after {{
-                    content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: white; transition: width 0.3s ease;
+                    content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0; background-color: white; transition: width 0.3s ease;
                 }}
                 .btn-text-only:hover::after {{ width: 100%; }}
+                .btn-text-only:hover {{ color: white; }}
 
                 /* --- Hero Section --- */
                 .hero-container {{
@@ -168,6 +179,7 @@ def home():
                     font-size: 1em;
                     animation: floatHint 2s infinite ease-in-out;
                     white-space: nowrap;
+                    opacity: 0.8;
                 }}
 
                 .shop-hint-chalk {{
@@ -177,7 +189,7 @@ def home():
                     font-family: 'Architects Daughter', cursive;
                     font-size: 1.8em;
                     color: #fdfdfd;
-                    transform: rotate(-8deg); /* Shop hint stays slanted per previous design */
+                    transform: rotate(-8deg);
                     cursor: pointer;
                     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
                     transition: 0.3s;
@@ -193,15 +205,29 @@ def home():
                 .hero-wrapper {{
                     width: 100%;
                     height: 380px;
-                    border: 2px solid white;
-                    border-radius: 24px;
+                    /* CHANGED: Thinner border, darker shadow for depth */
+                    border: 1px solid rgba(255,255,255,0.3);
+                    border-radius: 4px; /* Less rounded corners for pro look */
                     overflow: hidden;
                     cursor: pointer;
                     position: relative;
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
                 }}
 
-                .main-img {{ width: 100%; height: 100%; object-fit: cover; object-position: center; }}
+                .main-img {{ 
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: cover; 
+                    object-position: center; 
+                    /* CHANGED: Added filters to give the image that "Ondra Vibe" (Contrast & Drama) */
+                    filter: contrast(1.15) brightness(0.9) saturate(1.1);
+                    transition: 0.5s ease;
+                }}
+                
+                .hero-wrapper:hover .main-img {{
+                    filter: contrast(1.0) brightness(1.0); /* Returns to normal on hover */
+                    transform: scale(1.02);
+                }}
 
                 .slide {{
                     display: none; width: 100%; height: 100%; background-size: cover; background-position: center;
@@ -209,32 +235,33 @@ def home():
                 }}
 
                 .slide-content {{
-                    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); padding: 20px;
-                    border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); font-size: 1.1em; line-height: 1.5; margin-bottom: 10px;
+                    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); padding: 20px;
+                    border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); font-size: 1.1em; line-height: 1.5; margin-bottom: 10px;
                 }}
 
                 .nav-arrow {{
-                    position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); color: white;
-                    border: 1px solid white; width: 45px; height: 45px; border-radius: 50%; z-index: 10; cursor: pointer;
-                    display: flex; align-items: center; justify-content: center; font-size: 20px;
+                    position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white;
+                    border: 1px solid rgba(255,255,255,0.3); width: 45px; height: 45px; border-radius: 50%; z-index: 10; cursor: pointer;
+                    display: flex; align-items: center; justify-content: center; font-size: 20px; transition: 0.3s;
                 }}
+                .nav-arrow:hover {{ background: white; color: black; }}
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
                 /* --- Shop Tab Modal --- */
                 .shop-modal-content {{
-                    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('{hero5_url}');
+                    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{hero5_url}');
                     background-size: cover;
                     background-position: center;
                     margin: 15vh auto;
                     padding: 40px 20px 80px 20px; 
-                    border: 1px solid rgba(255,255,255,0.4);
-                    border-radius: 20px;
+                    border: 1px solid rgba(255,255,255,0.2);
+                    border-radius: 8px; /* Sharper corners */
                     width: 500px;
                     max-width: 90%;
                     min-height: 400px;
                     position: relative;
-                    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+                    box-shadow: 0 0 60px rgba(0,0,0,0.8);
                     text-align: center;
                     display: flex;
                     flex-direction: column;
@@ -266,61 +293,64 @@ def home():
 
                 .emoji-icon {{
                     font-size: 4em; margin-bottom: 10px; display: block;
-                    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+                    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
                 }}
                 .shop-item span {{ 
-                    font-weight: 700; font-size: 1.1em; text-transform: capitalize; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+                    font-weight: 700; font-size: 1.1em; text-transform: capitalize; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,1);
                 }}
 
                 .contact-container {{
                     position: absolute; bottom: 20px; left: 20px; text-align: left; cursor: default;
                 }}
                 .contact-btn {{
-                    font-size: 0.9em; font-weight: bold; color: white; cursor: pointer; text-decoration: underline; opacity: 0.9; transition: 0.3s; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+                    font-size: 0.9em; font-weight: bold; color: rgba(255,255,255,0.7); cursor: pointer; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
                 }}
-                .contact-btn:hover {{ opacity: 1; color: #3498db; }}
+                .contact-btn:hover {{ color: white; }}
 
-                .contact-form {{ display: none; margin-top: 5px; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 8px; width: 200px; }}
-                .contact-input {{ width: 100%; padding: 5px; margin-bottom: 5px; border-radius: 4px; border: none; font-family: inherit; font-size: 0.8em; }}
-                .send-btn-link {{ display: inline-block; background-color: #3498db; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8em; font-weight: bold; }}
+                .contact-form {{ display: none; margin-top: 5px; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px; width: 200px; border: 1px solid rgba(255,255,255,0.2); }}
+                .contact-input {{ width: 100%; padding: 8px; margin-bottom: 5px; background: #222; color: white; border-radius: 2px; border: 1px solid #444; font-family: inherit; font-size: 0.8em; }}
+                .send-btn-link {{ display: inline-block; background-color: #fff; color: #000; padding: 4px 15px; border-radius: 2px; text-decoration: none; font-size: 0.8em; font-weight: bold; }}
 
                 .video-container {{ display: flex; justify-content: center; gap: 30px; padding: 40px 20px; }}
-                .video-item {{ width: 25%; max-height: 200px; object-fit: cover; border-radius: 16px; border: 1px solid white; }}
+                .video-item {{ width: 25%; max-height: 200px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); }}
 
                 /* --- QA Section --- */
                 .qa-section {{
-                    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{qa_bg_url}');
+                    background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('{qa_bg_url}');
                     background-size: cover; background-position: center; background-attachment: fixed;
-                    padding: 60px 20px; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.2);
+                    padding: 60px 20px; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1);
                 }}
                 .qa-content {{ max-width: 800px; margin: 0 auto; }}
                 .qa-row {{ margin-bottom: 15px; text-align: left; }}
                 .qa-question {{
-                    padding: 20px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
-                    border-radius: 12px; cursor: pointer; font-weight: bold; display: flex;
-                    justify-content: space-between; border: 1px solid rgba(255,255,255,0.1); font-size: 1.2em;
+                    padding: 20px; background: rgba(255,255,255,0.05); backdrop-filter: blur(5px);
+                    border-radius: 4px; cursor: pointer; font-weight: bold; display: flex;
+                    justify-content: space-between; border: 1px solid rgba(255,255,255,0.1); font-size: 1.2em; transition: 0.3s;
                 }}
+                .qa-question:hover {{ background: rgba(255,255,255,0.1); }}
                 .qa-answer {{
                     max-height: 0; overflow: hidden; transition: all 0.4s ease; padding: 0 20px;
-                    color: #3498db; font-size: 1.1em; background: rgba(0,0,0,0.3); border-radius: 0 0 12px 12px;
+                    color: #bbb; font-size: 1.1em; background: rgba(0,0,0,0.3); border-radius: 0 0 4px 4px;
                 }}
-                .qa-answer.show {{ max-height: 200px; padding: 15px 20px; border: 1px solid rgba(52, 152, 219, 0.3); border-top: none; }}
+                .qa-answer.show {{ max-height: 200px; padding: 15px 20px; border: 1px solid rgba(255,255,255,0.1); border-top: none; }}
 
                 /* --- Generic Modal --- */
-                .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }}
+                .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }}
                 .modal-content-gym {{ 
-                    background: #1e2a38; margin: 10vh auto; padding: 60px 20px 20px; 
-                    border: 2px solid white; border-radius: 24px; width: 80%; height: 70vh;
+                    background: #121212; margin: 10vh auto; padding: 60px 20px 20px; 
+                    border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; width: 80%; height: 70vh;
                     position: relative; overflow-y: auto;
                 }}
-                .close-btn {{ position: absolute; top: 15px; right: 15px; font-size: 30px; cursor: pointer; color: white; z-index: 10; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }}
+                .close-btn {{ position: absolute; top: 15px; right: 15px; font-size: 30px; cursor: pointer; color: white; z-index: 10; opacity: 0.7; }}
+                .close-btn:hover {{ opacity: 1; }}
                 .gym-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%; }}
-                .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.6em; font-weight: bold; text-decoration: none; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.4); padding: 15px; text-align: center; }}
+                .gym-box {{ display: flex; align-items: center; justify-content: center; font-size: 1.6em; font-weight: bold; text-decoration: none; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); padding: 15px; text-align: center; background: rgba(255,255,255,0.05); color: #ddd; transition: 0.3s; }}
+                .gym-box:hover {{ background: rgba(255,255,255,0.1); color: white; border-color: white; }}
 
                 .back-to-top {{
-                    position: fixed; bottom: 30px; right: 30px; background-color: #000000; color: white; width: 50px; height: 50px;
+                    position: fixed; bottom: 30px; right: 30px; background-color: #000; color: white; width: 50px; height: 50px;
                     border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; z-index: 1000;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-size: 24px; border: 1px solid rgba(255,255,255,0.2);
+                    box-shadow: 0 4px 15px rgba(255,255,255,0.1); font-size: 24px; border: 1px solid rgba(255,255,255,0.2);
                 }}
 
                 @media (max-width: 768px) {{
@@ -343,9 +373,9 @@ def home():
             <div class="header-container">
                 <div class="nav-buttons">
                     <button class="btn-text-only" onclick="scrollToQA()">QA ❓</button>
-                    </div>
+                </div>
 
-                <div class="main-title">The Bouldering Library</div>
+                <div class="main-title">The Bouldering Coach</div>
 
                 <div class="menu-container">
                     <span class="menu-label">Menu</span>
@@ -420,17 +450,17 @@ def home():
                 <div class="modal-content-gym">
                     <span class="close-btn" onclick="closeGyms()">&times;</span>
                     <div class="gym-grid">
-                        <a href="https://www.isaacclimbing.com" target="_blank" class="gym-box" style="color:#ff69b4;">Issac Climbing Gym</a>
-                        <a href="https://www.thebloc.co.il/tlv" target="_blank" class="gym-box" style="color:#ffff00;">Block Climbing Gym</a>
-                        <a href="https://performancerock.co.il/branch/midtown-tlv/" target="_blank" class="gym-box" style="color:#2ecc71;">Performance Climbing Gym</a>
-                        <a href="https://vking.co.il/" target="_blank" class="gym-box" style="color:#3498db;">Viking Climbing Gym</a>
+                        <a href="https://www.isaacclimbing.com" target="_blank" class="gym-box">Issac Climbing Gym</a>
+                        <a href="https://www.thebloc.co.il/tlv" target="_blank" class="gym-box">Block Climbing Gym</a>
+                        <a href="https://performancerock.co.il/branch/midtown-tlv/" target="_blank" class="gym-box">Performance Climbing Gym</a>
+                        <a href="https://vking.co.il/" target="_blank" class="gym-box">Viking Climbing Gym</a>
                     </div>
                 </div>
             </div>
 
             <div id="qaSection" class="qa-section">
                 <div class="qa-content">
-                    <h2 style="font-size: 2.5em; margin-bottom: 40px; color: #3498db;">Common Questions</h2>
+                    <h2 style="font-size: 2.5em; margin-bottom: 40px; color: #fff;">Common Questions</h2>
                     <div class="qa-row">
                         <div class="qa-question" onclick="toggleAnswer(this)">Is Bouldering hard? <span>+</span></div>
                         <div class="qa-answer">Bouldering fits everybody! From a simple ladder to a world-class climb.</div>
