@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
+    # Asset URLs
     image_url = url_for('static', filename='hero.jpg')
     qa_bg_url = url_for('static', filename='hero2.jpg')
     hero3_url = url_for('static', filename='hero3.jpg')
@@ -33,18 +34,6 @@ def home():
                     overflow-x: hidden;
                 }}
 
-                /* --- Animations --- */
-                @keyframes modalFadeIn {{
-                    from {{ opacity: 0; }}
-                    to {{ opacity: 1; }}
-                }}
-
-                @keyframes modalPopUp {{
-                    0% {{ transform: scale(0.5); opacity: 0; }}
-                    80% {{ transform: scale(1.05); opacity: 1; }}
-                    100% {{ transform: scale(1); opacity: 1; }}
-                }}
-
                 /* --- Header --- */
                 .header-container {{
                     display: flex;
@@ -55,6 +44,8 @@ def home():
                     margin: 0 auto;
                     position: relative;
                 }}
+                
+                /* Left Buttons (Only QA remains) */
                 .nav-buttons {{ 
                     position: absolute; 
                     left: 20px; 
@@ -64,11 +55,79 @@ def home():
                     top: 55px;
                     align-items: flex-start;
                 }}
+
                 .main-title {{ 
                     font-size: 2.5em; 
                     font-weight: 800; 
                     text-shadow: 0 4px 10px rgba(0,0,0,0.3);
                     text-transform: uppercase;
+                }}
+
+                /* --- Top Right Menu (Chalkboard Style - No Slant) --- */
+                .menu-container {{
+                    position: absolute;
+                    right: 30px;
+                    top: 50px;
+                    z-index: 100;
+                    text-align: right;
+                }}
+
+                .menu-label {{
+                    font-family: 'Architects Daughter', cursive;
+                    font-size: 1.8em;
+                    color: #fdfdfd;
+                    /* transform: rotate(5deg); REMOVED SLANT */
+                    cursor: pointer;
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                    transition: 0.3s;
+                    display: inline-block;
+                    padding-bottom: 10px;
+                }}
+                
+                .menu-label:hover {{
+                    color: #3498db;
+                    transform: scale(1.1); /* Simple scale instead of rotate */
+                }}
+
+                /* The Fade-in List */
+                .menu-dropdown {{
+                    visibility: hidden;
+                    opacity: 0;
+                    position: absolute;
+                    right: 0;
+                    top: 50px;
+                    background: rgba(0, 0, 0, 0.8);
+                    border: 1px solid rgba(255,255,255,0.2);
+                    border-radius: 12px;
+                    padding: 15px;
+                    width: 220px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    transition: opacity 0.4s ease, visibility 0.4s ease;
+                    backdrop-filter: blur(5px);
+                }}
+
+                .menu-container:hover .menu-dropdown {{
+                    visibility: visible;
+                    opacity: 1;
+                }}
+
+                .menu-item {{
+                    color: white;
+                    text-decoration: none;
+                    font-weight: bold;
+                    font-size: 1.1em;
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    transition: 0.3s;
+                    cursor: pointer;
+                    text-align: center;
+                }}
+                
+                .menu-item:hover {{
+                    background: rgba(255, 255, 255, 0.2);
+                    color: #3498db;
                 }}
 
                 /* --- Text Only Buttons --- */
@@ -118,7 +177,7 @@ def home():
                     font-family: 'Architects Daughter', cursive;
                     font-size: 1.8em;
                     color: #fdfdfd;
-                    transform: rotate(-8deg);
+                    transform: rotate(-8deg); /* Shop hint stays slanted per previous design */
                     cursor: pointer;
                     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
                     transition: 0.3s;
@@ -162,7 +221,7 @@ def home():
                 .prev {{ left: 15px; }}
                 .next {{ right: 15px; }}
 
-                /* --- Shop Tab Modal (Bottom Aligned + Animation) --- */
+                /* --- Shop Tab Modal --- */
                 .shop-modal-content {{
                     background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('{hero5_url}');
                     background-size: cover;
@@ -181,8 +240,13 @@ def home():
                     flex-direction: column;
                     justify-content: flex-end;
                     cursor: pointer;
-                    /* Added Pop Up Animation */
                     animation: modalPopUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                }}
+
+                @keyframes modalPopUp {{
+                    0% {{ transform: scale(0.5); opacity: 0; }}
+                    80% {{ transform: scale(1.05); opacity: 1; }}
+                    100% {{ transform: scale(1); opacity: 1; }}
                 }}
 
                 .shop-grid {{
@@ -208,7 +272,6 @@ def home():
                     font-weight: 700; font-size: 1.1em; text-transform: capitalize; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.8);
                 }}
 
-                /* --- Contact Us Section --- */
                 .contact-container {{
                     position: absolute; bottom: 20px; left: 20px; text-align: left; cursor: default;
                 }}
@@ -217,18 +280,10 @@ def home():
                 }}
                 .contact-btn:hover {{ opacity: 1; color: #3498db; }}
 
-                .contact-form {{
-                    display: none; margin-top: 5px; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 8px; width: 200px;
-                }}
-                .contact-input {{
-                    width: 100%; padding: 5px; margin-bottom: 5px; border-radius: 4px; border: none; font-family: inherit; font-size: 0.8em;
-                }}
-                .send-btn-link {{
-                    display: inline-block; background-color: #3498db; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8em; font-weight: bold;
-                }}
-                .send-btn-link:hover {{ background-color: #2980b9; }}
+                .contact-form {{ display: none; margin-top: 5px; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 8px; width: 200px; }}
+                .contact-input {{ width: 100%; padding: 5px; margin-bottom: 5px; border-radius: 4px; border: none; font-family: inherit; font-size: 0.8em; }}
+                .send-btn-link {{ display: inline-block; background-color: #3498db; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8em; font-weight: bold; }}
 
-                /* --- Video Container --- */
                 .video-container {{ display: flex; justify-content: center; gap: 30px; padding: 40px 20px; }}
                 .video-item {{ width: 25%; max-height: 200px; object-fit: cover; border-radius: 16px; border: 1px solid white; }}
 
@@ -252,11 +307,7 @@ def home():
                 .qa-answer.show {{ max-height: 200px; padding: 15px 20px; border: 1px solid rgba(52, 152, 219, 0.3); border-top: none; }}
 
                 /* --- Generic Modal --- */
-                .modal {{ 
-                    display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; 
-                    background: rgba(0,0,0,0.8);
-                    animation: modalFadeIn 0.3s ease-out; /* Fade background */
-                }}
+                .modal {{ display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }}
                 .modal-content-gym {{ 
                     background: #1e2a38; margin: 10vh auto; padding: 60px 20px 20px; 
                     border: 2px solid white; border-radius: 24px; width: 80%; height: 70vh;
@@ -275,6 +326,8 @@ def home():
                 @media (max-width: 768px) {{
                     .header-container {{ padding-top: 110px; }}
                     .nav-buttons {{ position: absolute; top: 20px; left: 50%; transform: translateX(-50%); flex-direction: row; align-items: center; }}
+                    .menu-container {{ right: 50%; transform: translateX(50%); top: 70px; }}
+                    .menu-dropdown {{ right: auto; left: 50%; transform: translateX(-50%); }}
                     .hero-container {{ width: 100%; margin-top: 50px; flex-direction: column; }}
                     .click-hint {{ position: relative; left: auto; top: auto; transform: none; margin-bottom: 10px; animation: none; }}
                     .shop-hint-chalk {{ position: relative; top: auto; right: auto; margin-top: 10px; transform: rotate(-3deg); }}
@@ -290,9 +343,19 @@ def home():
             <div class="header-container">
                 <div class="nav-buttons">
                     <button class="btn-text-only" onclick="scrollToQA()">QA ❓</button>
-                    <button class="btn-text-only" onclick="openGyms()">Gyms In TLV</button>
-                </div>
+                    </div>
+
                 <div class="main-title">The Bouldering Library</div>
+
+                <div class="menu-container">
+                    <span class="menu-label">Menu</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-item">Strength For Climbers</div>
+                        <div class="menu-item">Techniques</div>
+                        <div class="menu-item" onclick="openGyms()">Gyms In TLV</div>
+                        <div class="menu-item">About</div>
+                    </div>
+                </div>
             </div>
 
             <div class="hero-container">
@@ -328,7 +391,6 @@ def home():
 
             <div id="shopModal" class="modal">
                 <div class="shop-modal-content" onclick="closeShop()">
-                    
                     <div class="shop-grid" onclick="event.stopPropagation()">
                         <div class="shop-item">
                             <span class="emoji-icon">📝</span>
@@ -351,7 +413,6 @@ def home():
                             <a id="mailLink" href="mailto:Elad@mulitime.com" class="send-btn-link">Send</a>
                         </div>
                     </div>
-
                 </div>
             </div>
 
