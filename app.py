@@ -24,7 +24,6 @@ def home():
             <style>
                 body {{
                     font-family: 'Segoe UI', Roboto, sans-serif;
-                    /* CHANGED: Reverted back to the blue gradient */
                     background: linear-gradient(135deg, #1e2a38 0%, #2c3e50 100%);
                     color: white;
                     text-align: center;
@@ -40,8 +39,9 @@ def home():
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    padding: 45px 20px 20px 20px;
-                    max-width: 1200px;
+                    /* Reduced padding to bring content closer */
+                    padding: 30px 20px 10px 20px;
+                    max-width: 1250px;
                     margin: 0 auto;
                     position: relative;
                 }}
@@ -49,50 +49,49 @@ def home():
                 .nav-buttons {{ 
                     position: absolute; 
                     left: 20px; 
-                    display: flex; 
-                    flex-direction: column; 
-                    gap: 20px; 
-                    top: 55px;
-                    align-items: flex-start;
+                    top: 50%;
+                    transform: translateY(-50%);
                 }}
 
                 .main-title {{ 
                     font-family: 'Architects Daughter', cursive;
-                    font-size: 3em; 
+                    font-size: 2.8em; 
                     font-weight: 800; 
                     text-shadow: 0 4px 10px rgba(0,0,0,0.3);
                     color: #fff;
                     letter-spacing: 1px;
+                    margin: 0;
                 }}
 
                 /* --- Top Right Menu --- */
                 .menu-container {{
                     position: absolute;
-                    right: 30px;
-                    top: 50px;
+                    right: 20px;
+                    top: 50%;
+                    transform: translateY(-50%);
                     z-index: 100;
                     text-align: right;
                 }}
 
                 .menu-label {{
                     font-family: 'Architects Daughter', cursive;
-                    font-size: 1.8em;
+                    font-size: 1.6em;
                     color: #fdfdfd;
                     cursor: pointer;
                     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
                     transition: 0.3s;
                     display: inline-block;
-                    padding-bottom: 10px;
+                    padding: 10px;
                 }}
                 
-                .menu-label:hover {{ color: #3498db; transform: scale(1.1); }}
+                .menu-label:hover {{ color: #3498db; transform: scale(1.05); }}
 
                 .menu-dropdown {{
                     visibility: hidden;
                     opacity: 0;
                     position: absolute;
                     right: 0;
-                    top: 50px;
+                    top: 40px;
                     background: rgba(30, 42, 56, 0.95);
                     backdrop-filter: blur(10px);
                     border: 1px solid rgba(255,255,255,0.1);
@@ -110,7 +109,7 @@ def home():
 
                 .menu-item {{
                     color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; font-size: 1.1em;
-                    padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; cursor: pointer; text-align: right; display: block;
+                    padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; cursor: pointer; text-align: right; display: block;
                 }}
                 .menu-item:last-child {{ border-bottom: none; }}
                 .menu-item:hover {{ background: rgba(255, 255, 255, 0.05); color: #3498db; padding-right: 25px; }}
@@ -123,64 +122,62 @@ def home():
                 .btn-text-only::after {{ content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: white; transition: width 0.3s ease; }}
                 .btn-text-only:hover::after {{ width: 100%; }}
 
-                /* --- WIDE Hero Section --- */
+                /* --- HERO SECTION (LOGICAL SIZING) --- */
                 .hero-container {{
                     position: relative;
                     margin: 20px auto;
-                    /* CHANGED: Made wide like Ondra's site */
-                    width: 95%; 
-                    max-width: 1600px;
+                    /* Width Logic: Wide but not touching edges */
+                    width: 92%; 
+                    max-width: 1250px; 
                 }}
 
                 .hero-wrapper {{
                     width: 100%;
-                    /* CHANGED: Increased height for cinematic look */
-                    height: 600px;
-                    border: 2px solid white;
-                    border-radius: 24px;
+                    /* Height Logic: Panoramic aspect ratio (approx 21:9) */
+                    height: 500px;
+                    border: 1px solid rgba(255,255,255,0.6);
+                    border-radius: 20px;
                     overflow: hidden;
                     cursor: pointer;
                     position: relative;
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                    box-shadow: 0 25px 50px rgba(0,0,0,0.5); /* Deep shadow gives depth */
                 }}
 
                 .main-img {{ width: 100%; height: 100%; object-fit: cover; object-position: center; }}
 
-                /* --- Hints overlay inside the wide image --- */
+                /* Hints inside the image */
                 .click-hint {{
                     position: absolute;
-                    /* CHANGED: Positioned inside bottom left corner */
-                    bottom: 30px;
+                    bottom: 25px;
                     left: 30px;
-                    color: white;
+                    color: rgba(255,255,255,0.9);
                     font-weight: bold;
-                    font-size: 1.2em;
+                    font-size: 1.1em;
                     animation: floatHint 2s infinite ease-in-out;
                     white-space: nowrap;
                     z-index: 20;
-                    text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+                    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
                 }}
 
                 .shop-hint-chalk {{
                     position: absolute;
-                    /* CHANGED: Positioned inside top right corner */
-                    top: 30px;
+                    top: 25px;
                     right: 30px;
                     font-family: 'Architects Daughter', cursive;
-                    font-size: 2em;
+                    font-size: 1.8em;
                     color: #fdfdfd;
-                    transform: rotate(-8deg);
+                    transform: rotate(-5deg);
                     cursor: pointer;
-                    text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+                    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
                     transition: 0.3s;
                     white-space: nowrap;
                     z-index: 20;
                 }}
-                .shop-hint-chalk:hover {{ transform: rotate(-5deg) scale(1.1); color: #3498db; }}
+                .shop-hint-chalk:hover {{ transform: rotate(-2deg) scale(1.1); color: #3498db; }}
 
                 @keyframes floatHint {{ 
                     0%, 100% {{ transform: translateX(0); }} 
-                    50% {{ transform: translateX(10px); }} 
+                    50% {{ transform: translateX(8px); }} 
                 }}
 
                 .slide {{
@@ -227,14 +224,14 @@ def home():
                 .contact-input {{ width: 100%; padding: 5px; margin-bottom: 5px; border-radius: 4px; border: none; font-family: inherit; font-size: 0.8em; }}
                 .send-btn-link {{ display: inline-block; background-color: #3498db; color: white; padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8em; font-weight: bold; }}
 
-                /* --- Bottom Sections (Unchanged) --- */
-                .video-container {{ display: flex; justify-content: center; gap: 30px; padding: 40px 20px; }}
+                /* --- Bottom Sections --- */
+                .video-container {{ display: flex; justify-content: center; gap: 30px; padding: 20px 20px 40px 20px; }}
                 .video-item {{ width: 25%; max-height: 200px; object-fit: cover; border-radius: 16px; border: 1px solid white; }}
 
                 .qa-section {{
                     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{qa_bg_url}');
                     background-size: cover; background-position: center; background-attachment: fixed;
-                    padding: 60px 20px; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.2);
+                    padding: 60px 20px; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);
                 }}
                 .qa-content {{ max-width: 800px; margin: 0 auto; }}
                 .qa-row {{ margin-bottom: 15px; text-align: left; }}
@@ -257,14 +254,13 @@ def home():
                 .back-to-top {{ position: fixed; bottom: 30px; right: 30px; background-color: #000000; color: white; width: 50px; height: 50px; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-size: 24px; border: 1px solid rgba(255,255,255,0.2); }}
 
                 @media (max-width: 768px) {{
-                    .header-container {{ padding-top: 110px; flex-direction: column; gap: 20px; }}
-                    .nav-buttons {{ position: static; flex-direction: row; order: 2; }}
-                    .menu-container {{ position: static; order: 3; text-align: center; }}
-                    .main-title {{ order: 1; font-size: 2em; }}
-                    .menu-dropdown {{ left: 50%; transform: translateX(-50%); }}
-                    /* Adjust hero on mobile */
-                    .hero-container {{ margin-top: 30px; }}
-                    .hero-wrapper {{ height: 400px; }}
+                    .header-container {{ padding-top: 110px; flex-direction: column; gap: 10px; }}
+                    .nav-buttons {{ position: relative; top: 0; left: 0; flex-direction: row; justify-content: center; width: 100%; transform: none; }}
+                    .menu-container {{ position: absolute; top: 20px; right: 20px; transform: none; }}
+                    .menu-dropdown {{ right: -10px; }}
+                    .main-title {{ font-size: 2.2em; }}
+                    .hero-container {{ margin-top: 20px; width: 100%; }}
+                    .hero-wrapper {{ height: 350px; border-radius: 0; border: none; border-top: 1px solid white; border-bottom: 1px solid white; }}
                     .click-hint, .shop-hint-chalk {{ font-size: 1em; }}
                     .shop-modal-content {{ width: 85%; padding: 40px 10px 80px 10px; }}
                     .shop-grid {{ gap: 15px; }}
@@ -365,7 +361,7 @@ def home():
 
             <div id="qaSection" class="qa-section">
                 <div class="qa-content">
-                    <h2 style="font-size: 2.5em; margin-bottom: 40px; color: #3498db;">Common Questions</h2>
+                    <h2 style="font-size: 2.5em; margin-bottom: 40px; color: #fff;">Common Questions</h2>
                     <div class="qa-row">
                         <div class="qa-question" onclick="toggleAnswer(this)">Is Bouldering hard? <span>+</span></div>
                         <div class="qa-answer">Bouldering fits everybody! From a simple ladder to a world-class climb.</div>
